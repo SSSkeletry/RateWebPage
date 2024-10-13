@@ -6,6 +6,7 @@ const Page = require('./models/page');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const authenticateTokenOptional = require('./middleware/auth');
 
 // Middleware
 app.use(cors());
@@ -25,8 +26,45 @@ app.get('/api/pages', async (req, res) => {
     res.status(500).json({ error: 'Error fetching pages' });
   }
 });
+app.post('/api/analyze', authenticateTokenOptional, async (req, res) => {
+  const { url } = req.body;
 
-// Start server
+  const loadTime = 1234;  
+  const size = 1024;     
+  const requests = 20;   
+  let improvementSuggestions = [];
+  
+  if (loadTime > 2000) {
+    improvementSuggestions.push("Consider optimizing images and using caching.");
+  }
+  
+  if (requests > 50) {
+    improvementSuggestions.push("Reduce the number of HTTP requests by combining files.");
+  }
+  
+  const suggestionsText = improvementSuggestions.join(" ");
+
+  if (req.user) {
+    try {
+      const savedPage = await Page.create({
+        userId: req.user.id,
+        url,
+        loadTime,
+        size,
+        requests,
+        improvementSuggestions: suggestionsText
+      });
+      return res.json({ message: 'Analysis saved for registered user', result: savedPage });
+    } catch (error) {
+      return res.status(500).json({ error: 'Error saving analysis' });
+    }
+  }
+
+  const result = { url, loadTime, size, requests, improvementSuggestions: suggestionsText };
+  res.json({ message: 'Analysis result (not saved)', result });
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   sequelize.sync().then(() => console.log('Database synced'));
