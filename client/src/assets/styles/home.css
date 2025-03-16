@@ -1,0 +1,86 @@
+body {
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.promo {
+  display: flex;
+  align-items: center;
+}
+
+.promo-video {
+  top: 3vh;
+  position: relative;
+  width: 100vw;
+  height: auto;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.circle {
+  width: 85%;
+  height: 100%;
+  object-fit: cover;
+  margin-left: -20vw;
+}
+
+.promo-text {
+  position: absolute;
+  text-align: center;
+  padding-left: 45vw;
+  overflow: hidden;
+  z-index: 1;
+}
+
+h1 {
+  font-size: 9vh;
+  font-weight: bold;
+  text-align: center;
+}
+
+p {
+  font-size: 3vh;
+  color: #ccc;
+}
+
+.promo-stats ul {
+  display: flex;
+  gap: 20vh;
+  padding: 0;
+  list-style: none;
+}
+
+.promo-stats li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.num {
+  color: blue;
+  font-size: 6vh;
+  font-weight: bold;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 14px 28px;
+  background-color: blue;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: darkblue;
+}
