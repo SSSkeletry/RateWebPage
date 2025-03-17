@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Coustard:wght@400&display=swap");
 body {
   background-color: black;
   color: white;
@@ -29,30 +31,44 @@ body {
   margin-left: -20vw;
 }
 
-.promo-text {
+article {
+  font-family: "Coustard", serif;
   position: absolute;
-  text-align: center;
   padding-left: 45vw;
   overflow: hidden;
   z-index: 1;
+  nav {
+    display: flex;
+    justify-content: center;
+    padding-right: 10vh;
+  }
 }
 
 h1 {
   font-size: 9vh;
-  font-weight: bold;
   text-align: center;
+  font-family: "Jost", bold;
+  line-height: 1.2;
+  margin-bottom: 2vh;
+  span {
+    color: black;
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
+      1px 1px 0 #fff;
+  }
 }
 
 p {
-  font-size: 3vh;
-  color: #ccc;
+  font-size: 4vh;
+  max-width: 50vw;
+  padding-left: 3vw;
 }
 
 .promo-stats ul {
   display: flex;
-  gap: 20vh;
+  gap: 18vh;
   padding: 0;
   list-style: none;
+  padding-left: 3vw;
 }
 
 .promo-stats li {
@@ -68,19 +84,39 @@ p {
   font-weight: bold;
 }
 
-.btn {
-  display: inline-block;
-  margin-top: 20px;
+.btn-custom {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 0;
+  width: 44vh;
   padding: 14px 28px;
-  background-color: blue;
-  color: white;
   font-size: 20px;
   font-weight: bold;
+  color: white;
+  background-color: #2200ff;
   border: none;
   border-radius: 25px;
   cursor: pointer;
+  transition: width 0.3s ease-in-out, padding-right 0.3s ease-in-out;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-.btn:hover {
-  background-color: darkblue;
+.btn-icon {
+  opacity: 0;
+  font-size: 24px;
+  padding-left: 4vh;
+  transform: translateX(-10px);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.btn-custom:hover {
+  width: 50vh;
+  padding-right: 50px;
+}
+
+.btn-custom:hover .btn-icon {
+  opacity: 1;
+  transform: translateX(0);
 }

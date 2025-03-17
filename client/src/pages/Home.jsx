@@ -1,6 +1,8 @@
 import React from "react";
 import promo from "../assets/images/maingif.mp4";
 import "../assets/styles/home.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+
 const Home = () => {
   return (
     <>
@@ -17,8 +19,11 @@ const Home = () => {
               playsInline
             />
           </div>
-          <article className="promo-text">
-            <h1>ГОТОВИЙ ВИВЕСТИ САЙТ НА НОВИЙ РІВЕНЬ?</h1>
+          <article>
+            <h1>
+              <span>ГОТОВИЙ</span> ВИВЕСТИ <span>САЙТ</span> НА НОВИЙ{" "}
+              <span>РIВ</span>ЕНЬ?
+            </h1>
             <p>
               Ми знаємо, як зробити твій сайт швидшим, видимішим та
               ефективнішим. Незалежно від того, чи ти запускаєш новий проект або
@@ -42,7 +47,10 @@ const Home = () => {
               </ul>
             </aside>
             <nav>
-              <button class="btn">Почніть оптимізацію зараз</button>
+              <button className="btn-custom">
+                <span className="btn-text">Почніть оптимізацію зараз</span>
+                <i className="bi bi-caret-right btn-icon"></i>
+              </button>
             </nav>
           </article>
         </section>
