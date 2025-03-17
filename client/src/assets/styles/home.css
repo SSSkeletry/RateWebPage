@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Coustard:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@400;700&family=Coustard:wght@400&display=swap");
+
 body {
   background-color: black;
   color: white;
@@ -13,6 +13,7 @@ body {
 .promo {
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .promo-video {
@@ -47,7 +48,7 @@ article {
 h1 {
   font-size: 9vh;
   text-align: center;
-  font-family: "Jost", bold;
+  font-family: "Jost", sans-serif;
   line-height: 1.2;
   margin-bottom: 2vh;
   span {
@@ -89,7 +90,7 @@ p {
   align-items: center;
   justify-content: left;
   gap: 0;
-  width: 44vh;
+  width: 46vh;
   padding: 14px 28px;
   font-size: 20px;
   font-weight: bold;
@@ -118,5 +119,101 @@ p {
 
 .btn-custom:hover .btn-icon {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateX(0) rotate(360deg);
+}
+
+@media (max-width: 768px) {
+  body {
+    display: block;
+    text-align: center;
+  }
+
+  .promo {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .promo-video {
+    width: 100%;
+    height: auto;
+  }
+
+  .circle {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  article {
+    position: relative;
+    padding-left: 0;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 5vh;
+  }
+
+  p {
+    font-size: 2.5vh;
+    max-width: 90%;
+    padding-left: 0;
+    margin: 0 auto;
+  }
+
+  .promo-stats ul {
+    flex-direction: row;
+    gap: 13vh;
+    flex-wrap: nowrap;
+    span {
+      font-size: 15px;
+    }
+    .num {
+      color: blue;
+      font-size: 4vh;
+      font-weight: bold;
+    }
+  }
+
+  .btn-custom {
+    width: 80%;
+    font-size: 18px;
+    padding: 12px 24px;
+  }
+
+  .btn-custom:hover {
+    width: 80%;
+    padding-right: 24px;
+    transition: none;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 5vh;
+  }
+
+  p {
+    font-size: 2.5vh;
+  }
+
+  .btn-custom {
+    margin-left: 7vh;
+    font-size: 16px;
+    padding: 5px 15px;
+  }
+  .btn-custom:hover {
+    width: 80%;
+    padding-right: 15px;
+    transition: none;
+  }
+
+  .promo-stats ul {
+    gap: 5vh;
+    span {
+      font-size: 13px;
+    }
+    .num {
+      font-size: 3vh;
+    }
+  }
 }
