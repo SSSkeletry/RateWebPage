@@ -1,5 +1,5 @@
 import React from "react";
-import promo from "../assets/images/maingif.mp4";
+import promo from "../assets/images/promo-vid.mp4";
 import "../assets/styles/home.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
@@ -48,11 +48,14 @@ const Home = () => {
           </aside>
           <nav>
             <button className="btn-custom">
-              <span className="btn-text">Почніть оптимізацію зараз</span>
+              <span>Почніть оптимізацію зараз</span>
               <i className="bi bi-caret-right btn-icon"></i>
             </button>
           </nav>
         </article>
+      </section>
+      <section className="how-it-works">
+        <h1>ЯК ПОКРАЩИТИ САЙТ ЗА 5 КРОКІВ </h1>
       </section>
     </main>
   );

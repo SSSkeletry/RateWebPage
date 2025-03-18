@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Jost:wght@400;700&family=Coustard:wght@400&display=swap");
 
 body {
-  background-color: black;
   color: white;
   display: flex;
   justify-content: center;
@@ -11,65 +10,74 @@ body {
 }
 
 .promo {
-  display: flex;
+  background-color: black;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
   width: 100%;
 }
 
 .promo-video {
-  top: 3vh;
+  top: 16vh;
   position: relative;
-  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   height: auto;
   overflow: hidden;
   z-index: 0;
 }
 
 .circle {
-  width: 85%;
-  height: 100%;
+  padding-left: 4vh;
+  width: 90%;
+  height: auto;
   object-fit: cover;
-  margin-left: -20vw;
 }
 
 article {
   font-family: "Coustard", serif;
-  position: absolute;
-  padding-left: 45vw;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: 10vw;
+  margin-right: 5vw;
   z-index: 1;
-  nav {
-    display: flex;
-    justify-content: center;
-    padding-right: 10vh;
-  }
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  padding: 2vh 0;
 }
 
 h1 {
-  font-size: 9vh;
+  font-size: 4.5vw;
   text-align: center;
   font-family: "Jost", sans-serif;
-  line-height: 1.2;
-  margin-bottom: 2vh;
-  span {
-    color: black;
-    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
-      1px 1px 0 #fff;
-  }
+  line-height: 1.1;
+  margin-bottom: 1px;
+}
+
+h1 span {
+  color: black;
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
+    1px 1px 0 #fff;
 }
 
 p {
   font-size: 4vh;
   max-width: 50vw;
-  padding-left: 3vw;
+  text-align: left;
+  margin-bottom: 1vh;
 }
 
 .promo-stats ul {
   display: flex;
-  gap: 18vh;
+  gap: 15vh;
   padding: 0;
   list-style: none;
-  padding-left: 3vw;
 }
 
 .promo-stats li {
@@ -123,67 +131,20 @@ p {
 }
 
 @media (max-width: 768px) {
-  body {
-    display: block;
-    text-align: center;
-  }
-
   .promo {
+    display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  .promo-video {
-    width: 100%;
-    height: auto;
-  }
-
-  .circle {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  article {
-    position: relative;
-    padding-left: 0;
-    text-align: center;
-  }
-
-  h1 {
-    font-size: 5vh;
+  .promo-stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 3vh;
   }
 
   p {
     font-size: 2.5vh;
     max-width: 90%;
-    padding-left: 0;
-    margin: 0 auto;
-  }
-
-  .promo-stats ul {
-    flex-direction: row;
-    gap: 13vh;
-    flex-wrap: nowrap;
-    span {
-      font-size: 15px;
-    }
-    .num {
-      color: blue;
-      font-size: 4vh;
-      font-weight: bold;
-    }
-  }
-
-  .btn-custom {
-    width: 80%;
-    font-size: 18px;
-    padding: 12px 24px;
-  }
-
-  .btn-custom:hover {
-    width: 80%;
-    padding-right: 24px;
-    transition: none;
   }
 }
 
@@ -192,28 +153,12 @@ p {
     font-size: 5vh;
   }
 
-  p {
-    font-size: 2.5vh;
+  .promo-stats {
+    grid-template-columns: 1fr;
   }
 
   .btn-custom {
-    margin-left: 7vh;
-    font-size: 16px;
-    padding: 5px 15px;
-  }
-  .btn-custom:hover {
     width: 80%;
-    padding-right: 15px;
-    transition: none;
-  }
-
-  .promo-stats ul {
-    gap: 5vh;
-    span {
-      font-size: 13px;
-    }
-    .num {
-      font-size: 3vh;
-    }
+    font-size: 16px;
   }
 }
