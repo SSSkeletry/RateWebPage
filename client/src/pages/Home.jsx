@@ -21,7 +21,7 @@ const Home = () => {
         </div>
         <article>
           <h1>
-            <span>ГОТОВИЙ</span> ВИВЕСТИ <span>САЙТ</span> НА НОВИЙ{" "}
+            <span>ГОТОВИЙ</span> ВИВЕСТИ <span>САЙТ НА</span> НОВИЙ{" "}
             <span>РIВ</span>ЕНЬ?
           </h1>
           <p>

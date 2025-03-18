@@ -58,6 +58,8 @@ h1 {
   font-family: "Jost", sans-serif;
   line-height: 1.1;
   margin-bottom: 1px;
+  white-space: pre-line; /* Сохраняет перенос строк */
+  max-width: 100%;
 }
 
 h1 span {
@@ -136,29 +138,74 @@ p {
     flex-direction: column;
     align-items: center;
   }
+  h1 {
+    font-size: 5vw;
+    max-width: 60%;
+  }
+  .promo-video {
+    width: 50%;
+    height: 45vh;
+  }
 
-  .promo-stats {
+  .promo-stats ul {
     grid-template-columns: 1fr 1fr;
-    gap: 3vh;
+    gap: 15vw;
+    font-size: 1em;
   }
 
   p {
-    font-size: 2.5vh;
-    max-width: 90%;
+    font-size: 2.2vh;
+    max-width: 85%;
+  }
+  .num {
+    font-size: 4vh;
+  }
+  .btn-custom {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px 12px;
+    transition: none;
+    margin-bottom: 4vh;
+  }
+
+  .btn-custom:hover {
+    width: 100%;
+    padding-right: 12px;
+  }
+
+  .btn-icon {
+    display: none;
   }
 }
 
 @media (max-width: 480px) {
   h1 {
-    font-size: 5vh;
+    font-size: 7vw;
+    max-width: 90%;
   }
-
-  .promo-stats {
-    grid-template-columns: 1fr;
+  p {
+    font-size: 2.2vh;
+    max-width: 85%;
   }
-
-  .btn-custom {
+  .promo-video {
+    padding-right: 3vh;
     width: 80%;
-    font-size: 16px;
+    height: 48vh;
+  }
+  .promo-stats ul {
+    grid-template-columns: 1fr 1fr;
+    gap: 10vw;
+  }
+  .num {
+    font-size: 3vh;
+  }
+  li {
+    font-size: 0.7em;
+  }
+  .btn-custom {
+    font-size: 12px;
+    padding: 10px 12px;
+    transition: none;
+    margin-bottom: 5vh;
   }
 }
