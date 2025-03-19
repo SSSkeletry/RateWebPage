@@ -1,6 +1,6 @@
 import React from "react";
-import promo from "../assets/images/promo-vid.mp4";
-import "../assets/styles/home.css";
+import promo from "../../../shared/assets/promo-vid.mp4";
+import "./Home.module.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const Home = () => {
