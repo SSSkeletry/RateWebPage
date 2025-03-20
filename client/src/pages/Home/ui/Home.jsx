@@ -69,7 +69,7 @@ const Home = () => {
           </nav>
         </article>
       </section>
-      <div className={styles.container}>
+      <section className={styles.container}>
         <div className={styles.twoColumnSection}>
           <h2 className={styles.heading}>ЯК ПОКРАЩИТИ САЙТ ЗА 5 КРОКІВ </h2>
           <div className={styles.imageBlock}>
@@ -87,7 +87,7 @@ const Home = () => {
             </div>
           ))}
         </div>
-      </div>
+      </section>
     </main>
   );
 };

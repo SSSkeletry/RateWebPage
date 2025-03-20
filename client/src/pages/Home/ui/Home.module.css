@@ -252,17 +252,19 @@ nav {
   margin-bottom: 1vh;
   white-space: normal;
   word-wrap: break-word;
+  margin-top: 1vh;
 }
 
 .image {
   width: 10vw;
   height: auto;
+  object-fit: cover;
 }
 
 .fourColumnSection {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 15vh;
+  gap: 17vh;
 }
 
 .item {
