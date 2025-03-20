@@ -4,6 +4,7 @@ import seo from "./seo.png";
 import todo from "./todo.png";
 import speed from "./speed.png";
 import url from "./url.png";
+import line from "./line.png";
 
 export const assets = {
   promo,
@@ -12,4 +13,5 @@ export const assets = {
   todo,
   speed,
   url,
+  line,
 };

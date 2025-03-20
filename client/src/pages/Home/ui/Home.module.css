@@ -226,7 +226,7 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 15vw;
+  gap: 20vw;
   margin-bottom: 10vh;
   h2 {
     font-size: 3.5em;
@@ -269,4 +269,15 @@ nav {
 
 .item {
   text-align: center;
+}
+.lineBlock {
+  position: absolute;
+  z-index: 0;
+  width: 65%;
+}
+
+.puncturedLineImage {
+  width: 50%;
+  padding-top: 17vh;
+  padding-left: 30vh;
 }
