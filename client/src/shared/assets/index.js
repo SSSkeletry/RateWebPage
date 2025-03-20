@@ -5,6 +5,7 @@ import todo from "./todo.png";
 import speed from "./speed.png";
 import url from "./url.png";
 import line from "./line.png";
+import wavyline from "./wavyline.png";
 
 export const assets = {
   promo,
@@ -14,4 +15,5 @@ export const assets = {
   speed,
   url,
   line,
+  wavyline,
 };

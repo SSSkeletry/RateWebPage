@@ -86,6 +86,13 @@ const Home = () => {
             <img src={assets.url} alt="Картинка" className={styles.image} />
           </div>
         </div>
+        <div className={styles.lineBlock}>
+          <img
+            src={assets.wavyline}
+            alt="Пунктирная линия"
+            className={styles.wavyLine}
+          />
+        </div>
         <div className={styles.fourColumnSection}>
           {steps.map((step, index) => (
             <div className={styles.item} key={index}>
