@@ -1,11 +1,23 @@
 import React from "react";
-import promo from "../../../shared/assets/promo-vid.mp4";
-import monitor from "../../../shared/assets/monitor.png";
-import seo from "../../../shared/assets/seo.png";
-import todo from "../../../shared/assets/todo.png";
-import speed from "../../../shared/assets/speed.png";
 import styles from "./Home.module.css";
+import { assets } from "../../../shared/assets/";
 import "bootstrap-icons/font/bootstrap-icons.css";
+
+const steps = [
+  {
+    img: assets.seo,
+    text: "Детальний звіт з рекомендаціями щодо швидкості та SEO",
+  },
+  {
+    img: assets.monitor,
+    text: "Система автоматично аналізує сайт і знаходить помилки",
+  },
+  { img: assets.todo, text: "Дотримуйтесь запропонованих покрокових рішень" },
+  {
+    img: assets.speed,
+    text: "Покращена швидкість сайту та вищі позиції у пошуку.",
+  },
+];
 
 const Home = () => {
   return (
@@ -13,7 +25,7 @@ const Home = () => {
       <section className={styles.promo}>
         <div className={styles.promoVideo}>
           <video
-            src={promo}
+            src={assets.promo}
             className={styles.circle}
             autoPlay
             loop
@@ -57,43 +69,25 @@ const Home = () => {
           </nav>
         </article>
       </section>
-      <section className={styles.howToImprove}>
-        <div className={styles.stepsContainer}>
-          <div className={styles.step}>
-            <h1 className={styles.howToImproveTitle}>
-              ЯК ПОКРАЩИТИ САЙТ ЗА 5 КРОКІВ
-            </h1>
-            <p>Введіть адресу вашого сайту в поле перевірки</p>
-            <div className={styles.stepImage}>
-              <img src={monitor} alt="Введення сайту" />
-            </div>
-          </div>
-          <div className={styles.step}>
-            <div className={styles.stepImage}>
-              <img src={seo} alt="Аналіз сайту" />
-            </div>
-            <p>Система автоматично аналізує сайт і знаходить помилки</p>
-          </div>
-          <div className={styles.step}>
-            <p>Детальний звіт з рекомендаціями щодо швидкості та SEO</p>
-            <div className={styles.stepImage}>
-              <img src={seo} alt="Звіт SEO" />
-            </div>
-          </div>
-          <div className={styles.step}>
-            <div className={styles.stepImage}>
-              <img src={todo} alt="Виконання кроків" />
-            </div>
-            <p>Дотримуйтесь запропонованих покрокових рішень</p>
-          </div>
-          <div className={styles.step}>
-            <p>Покращена швидкість сайту та вищі позиції у пошуку</p>
-            <div className={styles.stepImage}>
-              <img src={speed} alt="Ріст швидкості" />
-            </div>
+      <div className={styles.container}>
+        <div className={styles.twoColumnSection}>
+          <h2 className={styles.heading}>ЯК ПОКРАЩИТИ САЙТ ЗА 5 КРОКІВ </h2>
+          <div className={styles.imageBlock}>
+            <p className={styles.imageText}>
+              Введіть адресу вашого сайту в поле перевірки
+            </p>
+            <img src={assets.url} alt="Картинка" className={styles.image} />
           </div>
         </div>
-      </section>
+        <div className={styles.fourColumnSection}>
+          {steps.map((step, index) => (
+            <div className={styles.item} key={index}>
+              <img src={step.img} alt="Картинка" className={styles.image} />
+              <p className={styles.imageText}>{step.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </main>
   );
 };
