@@ -214,84 +214,79 @@ nav {
 
 /*How it works section*/
 
-.container {
+.howItWorksContainer {
   margin-top: 25vh;
   display: flex;
   flex-direction: column;
   font-family: "Cousine", monospace;
 }
 
-.twoColumnSection {
+.sectionRow {
   display: flex;
   justify-content: center;
   align-items: center;
-  h2 {
-    text-align: center;
-    padding-left: 5vw;
-    font-size: 2.7em;
-    font-family: "Jost", sans-serif;
-    line-height: 1.1;
-    margin-bottom: 1px;
-    max-width: 40%;
-  }
-  .imageBlock {
-    padding-right: 14vh;
-  }
 }
 
-.heading {
-  font-size: 24px;
-  font-weight: bold;
+.sectionTitle {
+  text-align: center;
+  padding-left: 5vw;
+  font-size: 2.7em;
+  font-family: "Jost", sans-serif;
+  line-height: 1.1;
+  margin-bottom: 1px;
+  max-width: 40%;
 }
 
-.imageBlock {
+.textCenter {
   text-align: center;
 }
 
-.imageText {
+.imageWrapper {
+  padding-right: 14vh;
+}
+
+.descriptionText {
   max-width: 90%;
-  margin: 0 auto;
-  margin-bottom: 1vh;
-  white-space: normal;
+  margin: 0 auto 1vh;
   word-wrap: break-word;
 }
 
-.image {
+.icon {
   width: 13vw;
   height: auto;
   object-fit: cover;
 }
 
-.item {
-  text-align: center;
-}
-.lineBlock {
+.lineWrapper {
   position: relative;
   z-index: -1;
-  overflow: visible;
 }
 
-.puncturedLineImage {
+.dashedLine,
+.dashedLineAlt {
   width: 41vw;
   height: auto;
+}
+
+.dashedLine {
   padding-top: 9vh;
-  margin-right: -2vw;
-  margin-left: -1.5vw;
+  margin: 0 -1.5vw 0 -2vw;
 }
-.puncturedLineImage2 {
-  width: 41vw;
-  margin-right: -4vw;
-  margin-left: -4vw;
-  height: auto;
-  margin-top: 20vh;
+
+.dashedLineAlt {
+  margin: 20vh -4vw 0;
 }
-.wavyLine {
+
+.wavyLine,
+.wavyLineAlt {
   width: 2vw;
   height: 30vh;
+}
+
+.wavyLine {
   margin-left: 81vw;
 }
-.wavyLine2 {
-  width: 2vw;
-  height: 30vh;
+
+.wavyLineAlt {
   margin-left: 26vh;
 }

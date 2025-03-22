@@ -3,22 +3,6 @@ import styles from "./Home.module.css";
 import { assets } from "../../../shared/assets/";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-const steps = [
-  {
-    img: assets.seo,
-    text: "Детальний звіт з рекомендаціями щодо швидкості та SEO",
-  },
-  {
-    img: assets.monitor,
-    text: "Система автоматично аналізує сайт і знаходить помилки",
-  },
-  { img: assets.todo, text: "Дотримуйтесь запропонованих покрокових рішень" },
-  {
-    img: assets.speed,
-    text: "Отримайте покращену швидкість сайту та вищі позиції у пошуку.",
-  },
-];
-
 const Home = () => {
   return (
     <main>
@@ -70,69 +54,77 @@ const Home = () => {
         </article>
       </section>
 
-      <section className={styles.container}>
-        <div className={styles.twoColumnSection}>
-          <h2 className={styles.heading}>ЯК ПОКРАЩИТИ САЙТ ЗА 5 КРОКІВ </h2>
-          <div className={styles.lineBlock}>
+      <section className={styles.howItWorksContainer}>
+        <div className={styles.sectionRow}>
+          <h2 className={styles.sectionTitle}>ЯК ПОКРАЩИТИ САЙТ ЗА 5 КРОКІВ</h2>
+          <div className={styles.lineWrapper}>
             <img
               src={assets.line}
               alt="Пунктирная линия"
-              className={styles.puncturedLineImage}
+              className={styles.dashedLine}
             />
           </div>
-          <div className={styles.imageBlock}>
-            <p className={styles.imageText}>
+          <div className={styles.imageWrapper}>
+            <p className={styles.descriptionText}>
               Введіть адресу вашого сайту в поле перевірки
             </p>
-            <img src={assets.url} alt="Картинка" className={styles.image} />
+            <img src={assets.url} alt="Картинка" className={styles.icon} />
           </div>
         </div>
-        <div className={styles.lineBlock}>
+        <div className={styles.lineWrapper}>
           <img
             src={assets.wavyline}
             alt="Пунктирная линия"
             className={styles.wavyLine}
           />
         </div>
-        <div className={styles.twoColumnSection}>
-          <div className={styles.item}>
-            <img src={assets.seo} alt="Картинка" className={styles.image} />
-            <p className={styles.imageText}>{steps[0].text}</p>
+        <div className={styles.sectionRow}>
+          <div className={styles.textCenter}>
+            <img src={assets.seo} alt="Картинка" className={styles.icon} />
+            <p className={styles.descriptionText}>
+              Детальний звіт з рекомендаціями щодо швидкості та SEO
+            </p>
           </div>
-          <div className={styles.lineBlock}>
+          <div className={styles.lineWrapper}>
             <img
               src={assets.line}
               alt="Пунктирная линия"
-              className={styles.puncturedLineImage2}
+              className={styles.dashedLineAlt}
             />
           </div>
-          <div className={styles.item}>
-            <img src={assets.monitor} alt="Картинка" className={styles.image} />
-            <p className={styles.imageText}>{steps[1].text}</p>
+          <div className={styles.textCenter}>
+            <img src={assets.monitor} alt="Картинка" className={styles.icon} />
+            <p className={styles.descriptionText}>
+              Система автоматично аналізує сайт і знаходить помилки
+            </p>
           </div>
         </div>
-        <div className={styles.lineBlock}>
+        <div className={styles.lineWrapper}>
           <img
             src={assets.wavyline}
             alt="Пунктирная линия"
-            className={styles.wavyLine2}
+            className={styles.wavyLineAlt}
           />
         </div>
-        <div className={styles.twoColumnSection}>
-          <div className={styles.item}>
-            <img src={assets.todo} alt="Картинка" className={styles.image} />
-            <p className={styles.imageText}>{steps[2].text}</p>
+        <div className={styles.sectionRow}>
+          <div className={styles.textCenter}>
+            <img src={assets.todo} alt="Картинка" className={styles.icon} />
+            <p className={styles.descriptionText}>
+              Дотримуйтесь запропонованих покрокових рішень
+            </p>
           </div>
-          <div className={styles.lineBlock}>
+          <div className={styles.lineWrapper}>
             <img
               src={assets.line}
               alt="Пунктирная линия"
-              className={styles.puncturedLineImage2}
+              className={styles.dashedLineAlt}
             />
           </div>
-          <div className={styles.item}>
-            <img src={assets.speed} alt="Картинка" className={styles.image} />
-            <p className={styles.imageText}>{steps[3].text}</p>
+          <div className={styles.textCenter}>
+            <img src={assets.speed} alt="Картинка" className={styles.icon} />
+            <p className={styles.descriptionText}>
+              Отримайте покращену швидкість сайту та вищі позиції у пошуку
+            </p>
           </div>
         </div>
       </section>
