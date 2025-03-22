@@ -1,11 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Jost:wght@400;700&family=Coustard:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@400;700&family=Coustard:wght@400&family=Cousine:wght@400&display=swap");
+
+/* Promo section */
 
 body {
+  background-color: black;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   margin: 0;
 }
 
@@ -15,10 +17,29 @@ body {
   grid-template-columns: 1fr 1fr;
   align-items: center;
   width: 100%;
+  h1 {
+    font-size: 4.5vw;
+    text-align: center;
+    font-family: "Jost", sans-serif;
+    line-height: 1.1;
+    margin-bottom: 1px;
+    white-space: pre-line;
+    max-width: 100%;
+  }
+  h1 span {
+    color: black;
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
+      1px 1px 0 #fff;
+  }
+  p {
+    font-size: 4vh;
+    max-width: 50vw;
+    text-align: left;
+    margin-bottom: 1vh;
+  }
 }
 
-.promo-video {
-  top: 16vh;
+.promoVideo {
   position: relative;
   justify-content: center;
   align-items: center;
@@ -26,6 +47,7 @@ body {
   height: auto;
   overflow: hidden;
   z-index: 0;
+  top: 7vh;
 }
 
 .circle {
@@ -35,13 +57,12 @@ body {
   object-fit: cover;
 }
 
-article {
+.article {
   font-family: "Coustard", serif;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding-top: 10vw;
   margin-right: 5vw;
   z-index: 1;
 }
@@ -52,37 +73,14 @@ nav {
   padding: 2vh 0;
 }
 
-h1 {
-  font-size: 4.5vw;
-  text-align: center;
-  font-family: "Jost", sans-serif;
-  line-height: 1.1;
-  margin-bottom: 1px;
-  white-space: pre-line; /* Сохраняет перенос строк */
-  max-width: 100%;
-}
-
-h1 span {
-  color: black;
-  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
-    1px 1px 0 #fff;
-}
-
-p {
-  font-size: 4vh;
-  max-width: 50vw;
-  text-align: left;
-  margin-bottom: 1vh;
-}
-
-.promo-stats ul {
+.promoStats ul {
   display: flex;
   gap: 15vh;
   padding: 0;
   list-style: none;
 }
 
-.promo-stats li {
+.promoStats li {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -95,13 +93,13 @@ p {
   font-weight: bold;
 }
 
-.btn-custom {
+.btnCustom {
   display: flex;
   align-items: center;
   justify-content: left;
   gap: 0;
   width: 46vh;
-  padding: 12px 28px;
+  padding: 10px 28px;
   font-size: 20px;
   font-weight: bold;
   color: white;
@@ -114,7 +112,7 @@ p {
   white-space: nowrap;
 }
 
-.btn-icon {
+.btnIcon {
   opacity: 0;
   font-size: 24px;
   padding-left: 4vh;
@@ -122,12 +120,12 @@ p {
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-.btn-custom:hover {
+.btnCustom:hover {
   width: 50vh;
   padding-right: 50px;
 }
 
-.btn-custom:hover .btn-icon {
+.btnCustom:hover .btnIcon {
   opacity: 1;
   transform: translateX(0) rotate(360deg);
 }
@@ -137,30 +135,31 @@ p {
     display: flex;
     flex-direction: column;
     align-items: center;
+    h1 {
+      font-size: 5vw;
+      max-width: 60%;
+    }
+    p {
+      font-size: 2.2vh;
+      max-width: 85%;
+    }
   }
-  h1 {
-    font-size: 5vw;
-    max-width: 60%;
-  }
-  .promo-video {
+  .promoVideo {
     width: 50%;
-    height: 45vh;
+    height: auto;
+    padding-bottom: 4vh;
   }
 
-  .promo-stats ul {
+  .promoStats ul {
     grid-template-columns: 1fr 1fr;
     gap: 15vw;
     font-size: 1em;
   }
 
-  p {
-    font-size: 2.2vh;
-    max-width: 85%;
-  }
   .num {
     font-size: 4vh;
   }
-  .btn-custom {
+  .btnCustom {
     width: 100%;
     font-size: 14px;
     padding: 10px 12px;
@@ -168,31 +167,34 @@ p {
     margin-bottom: 4vh;
   }
 
-  .btn-custom:hover {
+  .btnCustom:hover {
     width: 100%;
     padding-right: 12px;
   }
 
-  .btn-icon {
+  .btnIcon {
     display: none;
   }
 }
 
 @media (max-width: 480px) {
-  h1 {
-    font-size: 7vw;
-    max-width: 90%;
+  .promo {
+    h1 {
+      font-size: 7vw;
+      max-width: 90%;
+    }
+    p {
+      font-size: 2.2vh;
+      max-width: 85%;
+    }
   }
-  p {
-    font-size: 2.2vh;
-    max-width: 85%;
-  }
-  .promo-video {
+  .promoVideo {
     padding-right: 3vh;
-    width: 80%;
-    height: 48vh;
+    padding-bottom: 7vh;
+    width: 70%;
+    height: auto;
   }
-  .promo-stats ul {
+  .promoStats ul {
     grid-template-columns: 1fr 1fr;
     gap: 10vw;
   }
@@ -202,10 +204,89 @@ p {
   li {
     font-size: 0.7em;
   }
-  .btn-custom {
+  .btnCustom {
     font-size: 12px;
     padding: 10px 12px;
     transition: none;
     margin-bottom: 5vh;
   }
+}
+
+/*How it works section*/
+
+.howItWorksContainer {
+  margin-top: 25vh;
+  display: flex;
+  flex-direction: column;
+  font-family: "Cousine", monospace;
+}
+
+.sectionRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sectionTitle {
+  text-align: center;
+  padding-left: 5vw;
+  font-size: 2.7em;
+  font-family: "Jost", sans-serif;
+  line-height: 1.1;
+  margin-bottom: 1px;
+  max-width: 40%;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.imageWrapper {
+  padding-right: 14vh;
+}
+
+.descriptionText {
+  max-width: 90%;
+  margin: 0 auto 1vh;
+  word-wrap: break-word;
+}
+
+.icon {
+  width: 13vw;
+  height: auto;
+  object-fit: cover;
+}
+
+.lineWrapper {
+  position: relative;
+  z-index: -1;
+}
+
+.dashedLine,
+.dashedLineAlt {
+  width: 41vw;
+  height: auto;
+}
+
+.dashedLine {
+  padding-top: 9vh;
+  margin: 0 -1.5vw 0 -2vw;
+}
+
+.dashedLineAlt {
+  margin: 20vh -4vw 0;
+}
+
+.wavyLine,
+.wavyLineAlt {
+  width: 2vw;
+  height: 30vh;
+}
+
+.wavyLine {
+  margin-left: 81vw;
+}
+
+.wavyLineAlt {
+  margin-left: 26vh;
 }
