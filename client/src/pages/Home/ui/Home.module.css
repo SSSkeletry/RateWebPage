@@ -249,7 +249,7 @@ nav {
 }
 
 .imageText {
-  max-width: 70%;
+  max-width: 90%;
   margin: 0 auto;
   margin-bottom: 1vh;
   white-space: normal;
@@ -280,8 +280,8 @@ nav {
 }
 .puncturedLineImage2 {
   width: 41vw;
-  margin-right: -5.5vw;
-  margin-left: -5vw;
+  margin-right: -4vw;
+  margin-left: -4vw;
   height: auto;
   margin-top: 20vh;
 }
