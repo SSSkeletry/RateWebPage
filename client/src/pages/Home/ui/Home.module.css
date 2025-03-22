@@ -218,7 +218,6 @@ nav {
   margin-top: 25vh;
   display: flex;
   flex-direction: column;
-  text-align: center;
   font-family: "Cousine", monospace;
 }
 
@@ -226,18 +225,14 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 5vw;
   h2 {
+    text-align: center;
     padding-left: 5vw;
-    font-size: 2.3em;
+    font-size: 2.7em;
     font-family: "Jost", sans-serif;
     line-height: 1.1;
     margin-bottom: 1px;
     max-width: 40%;
-  }
-  p {
-    padding-top: 2.5vh;
-    max-width: 100%;
   }
   .imageBlock {
     padding-right: 14vh;
@@ -254,12 +249,11 @@ nav {
 }
 
 .imageText {
-  max-width: 60%;
+  max-width: 70%;
   margin: 0 auto;
   margin-bottom: 1vh;
   white-space: normal;
   word-wrap: break-word;
-  margin-top: 1vh;
 }
 
 .image {
@@ -268,28 +262,36 @@ nav {
   object-fit: cover;
 }
 
-.fourColumnSection {
-  z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 7vh 20vw;
-}
-
 .item {
   text-align: center;
 }
 .lineBlock {
-  z-index: 0;
-  width: 80%;
+  position: relative;
+  z-index: -1;
+  overflow: visible;
 }
 
 .puncturedLineImage {
   width: 41vw;
   height: auto;
-  padding-top: 10vh;
+  padding-top: 9vh;
+  margin-right: -2vw;
+  margin-left: -1.5vw;
+}
+.puncturedLineImage2 {
+  width: 41vw;
+  margin-right: -5.5vw;
+  margin-left: -5vw;
+  height: auto;
+  margin-top: 20vh;
 }
 .wavyLine {
-  width: 5vw;
-  height: auto;
-  margin-left: 77vw;
+  width: 2vw;
+  height: 30vh;
+  margin-left: 81vw;
+}
+.wavyLine2 {
+  width: 2vw;
+  height: 30vh;
+  margin-left: 26vh;
 }

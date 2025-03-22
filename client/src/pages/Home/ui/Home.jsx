@@ -69,6 +69,7 @@ const Home = () => {
           </nav>
         </article>
       </section>
+
       <section className={styles.container}>
         <div className={styles.twoColumnSection}>
           <h2 className={styles.heading}>ЯК ПОКРАЩИТИ САЙТ ЗА 5 КРОКІВ </h2>
@@ -93,13 +94,46 @@ const Home = () => {
             className={styles.wavyLine}
           />
         </div>
-        <div className={styles.fourColumnSection}>
-          {steps.map((step, index) => (
-            <div className={styles.item} key={index}>
-              <img src={step.img} alt="Картинка" className={styles.image} />
-              <p className={styles.imageText}>{step.text}</p>
-            </div>
-          ))}
+        <div className={styles.twoColumnSection}>
+          <div className={styles.item}>
+            <img src={assets.seo} alt="Картинка" className={styles.image} />
+            <p className={styles.imageText}>{steps[0].text}</p>
+          </div>
+          <div className={styles.lineBlock}>
+            <img
+              src={assets.line}
+              alt="Пунктирная линия"
+              className={styles.puncturedLineImage2}
+            />
+          </div>
+          <div className={styles.item}>
+            <img src={assets.monitor} alt="Картинка" className={styles.image} />
+            <p className={styles.imageText}>{steps[1].text}</p>
+          </div>
+        </div>
+        <div className={styles.lineBlock}>
+          <img
+            src={assets.wavyline}
+            alt="Пунктирная линия"
+            className={styles.wavyLine2}
+          />
+        </div>
+        <div className={styles.twoColumnSection}>
+          <div className={styles.item}>
+            <img src={assets.todo} alt="Картинка" className={styles.image} />
+            <p className={styles.imageText}>{steps[2].text}</p>
+          </div>
+          <div className={styles.lineBlock}>
+            <img
+              src={assets.line}
+              alt="Пунктирная линия"
+              className={styles.puncturedLineImage2}
+            />
+          </div>
+          <div className={styles.item}>
+            <img src={assets.speed} alt="Картинка" className={styles.image} />
+            <p className={styles.imageText}>{steps[3].text}</p>
+          </div>
         </div>
       </section>
     </main>
