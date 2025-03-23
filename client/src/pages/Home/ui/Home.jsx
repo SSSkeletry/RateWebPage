@@ -1,9 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Home.module.css";
+import { motion } from "framer-motion";
 import { assets } from "../../../shared/assets/";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
+const fadeInUp = {
+  hidden: { opacity: 0, y: -50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+};
 const Home = () => {
+  const [isVisible, setIsVisible] = useState({});
+
+  useEffect(() => {
+    const sections = document.querySelectorAll("[data-animate]");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsVisible((prev) => ({
+            ...prev,
+            [entry.target.dataset.animate]: entry.isIntersecting,
+          }));
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => sections.forEach((section) => observer.unobserve(section));
+  }, []);
   return (
     <main>
       <section className={styles.promo}>
@@ -55,7 +80,13 @@ const Home = () => {
       </section>
 
       <section className={styles.howItWorksContainer}>
-        <div className={styles.sectionRow}>
+        <motion.div
+          data-animate="step1"
+          initial="hidden"
+          animate={isVisible["step1"] ? "visible" : "hidden"}
+          variants={fadeInUp}
+          className={styles.sectionRow}
+        >
           <h2 className={styles.sectionTitle}>ЯК ПОКРАЩИТИ САЙТ ЗА 5 КРОКІВ</h2>
           <div className={styles.lineWrapper}>
             <img
@@ -70,15 +101,25 @@ const Home = () => {
             </p>
             <img src={assets.url} alt="Картинка" className={styles.icon} />
           </div>
-        </div>
-        <div className={styles.lineWrapper}>
-          <img
-            src={assets.wavyline}
-            alt="Пунктирная линия"
-            className={styles.wavyLine}
-          />
-        </div>
-        <div className={styles.sectionRow}>
+        </motion.div>
+
+        <motion.img
+          data-animate="wavyline1"
+          initial="hidden"
+          animate={isVisible["wavyline1"] ? "visible" : "hidden"}
+          variants={fadeInUp}
+          src={assets.wavyline}
+          alt="Пунктирная линия"
+          className={styles.wavyLine}
+        />
+
+        <motion.div
+          data-animate="step2"
+          initial="hidden"
+          animate={isVisible["step2"] ? "visible" : "hidden"}
+          variants={fadeInUp}
+          className={styles.sectionRow}
+        >
           <div className={styles.textCenter}>
             <img src={assets.seo} alt="Картинка" className={styles.icon} />
             <p className={styles.descriptionText}>
@@ -98,15 +139,25 @@ const Home = () => {
               Система автоматично аналізує сайт і знаходить помилки
             </p>
           </div>
-        </div>
-        <div className={styles.lineWrapper}>
-          <img
-            src={assets.wavyline}
-            alt="Пунктирная линия"
-            className={styles.wavyLineAlt}
-          />
-        </div>
-        <div className={styles.sectionRow}>
+        </motion.div>
+
+        <motion.img
+          data-animate="wavyline2"
+          initial="hidden"
+          animate={isVisible["wavyline2"] ? "visible" : "hidden"}
+          variants={fadeInUp}
+          src={assets.wavyline}
+          alt="Пунктирная линия"
+          className={styles.wavyLineAlt}
+        />
+
+        <motion.div
+          data-animate="step3"
+          initial="hidden"
+          animate={isVisible["step3"] ? "visible" : "hidden"}
+          variants={fadeInUp}
+          className={styles.sectionRow}
+        >
           <div className={styles.textCenter}>
             <img src={assets.todo} alt="Картинка" className={styles.icon} />
             <p className={styles.descriptionText}>
@@ -126,7 +177,7 @@ const Home = () => {
               Отримайте покращену швидкість сайту та вищі позиції у пошуку
             </p>
           </div>
-        </div>
+        </motion.div>
       </section>
     </main>
   );
