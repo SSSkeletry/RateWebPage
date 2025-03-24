@@ -11,7 +11,7 @@ body {
   margin: 0;
 }
 
-.promo {
+.promoSection {
   background-color: black;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -289,4 +289,86 @@ nav {
 
 .wavyLineAlt {
   margin-left: 26vh;
+}
+
+/*Pricing section*/
+
+.header {
+  background: black;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.pricingContainer {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px;
+  background: #f0f0f0;
+}
+
+.planCard {
+  background: #000;
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 300px;
+  position: relative;
+  border: 1px solid white;
+}
+
+.planNumber {
+  background: white;
+  color: black;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 2px solid black;
+}
+
+.planTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 40px;
+}
+
+.planFeatures {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  font-size: 1rem;
+}
+
+.planFeatures li {
+  margin-bottom: 10px;
+}
+
+.planButton {
+  background: white;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.planButton:hover {
+  background: #ddd;
 }

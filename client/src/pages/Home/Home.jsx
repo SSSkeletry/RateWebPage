@@ -1,13 +1,52 @@
 import React, { useState, useEffect } from "react";
-import styles from "./Home.module.css";
+import styles from "./ui/Home.module.css";
 import { motion } from "framer-motion";
-import { assets } from "../../../shared/assets/";
+import { assets } from "../../shared/assets";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: -50 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
 };
+
+const plans = [
+  {
+    id: 1,
+    name: "Базовий",
+    price: "Безкоштовно",
+    features: [
+      "1 безкоштовний аналіз в день",
+      "Базові рекомендації оптимізації",
+      "Перевірка швидкості завантаження",
+    ],
+  },
+  {
+    id: 2,
+    name: "Середній",
+    price: "$20/місяць",
+    features: [
+      "50 безкоштовних аналізів в день",
+      "Повний SEO-аудит",
+      "Поліпшення швидкості завантаження",
+      "Оптимізація метатегів",
+      "Збереження звіту",
+    ],
+  },
+  {
+    id: 3,
+    name: "Просунутий",
+    price: "$40/місяць",
+    features: [
+      "Все з тарифу Середній",
+      "Безліміт безкоштовних аналізів",
+      "Глибока технічна оптимізація",
+      "Гнучкі налаштування звітності",
+      "Моніторинг змін",
+      "API-доступ",
+    ],
+  },
+];
+
 const Home = () => {
   const [isVisible, setIsVisible] = useState({});
 
@@ -31,7 +70,7 @@ const Home = () => {
   }, []);
   return (
     <main>
-      <section className={styles.promo}>
+      <section className={styles.promoSection}>
         <div className={styles.promoVideo}>
           <video
             src={assets.promo}
@@ -178,6 +217,24 @@ const Home = () => {
             </p>
           </div>
         </motion.div>
+      </section>
+
+      <section>
+        <div className={styles.header}>ТАРИФИ</div>
+        <div className={styles.pricingContainer}>
+          {plans.map((plan) => (
+            <div key={plan.id} className={styles.planCard}>
+              <div className={styles.planNumber}>{plan.id}</div>
+              <h2 className={styles.planTitle}>{plan.name}</h2>
+              <ul className={styles.planFeatures}>
+                {plan.features.map((feature, i) => (
+                  <li key={i}>✓ {feature}</li>
+                ))}
+              </ul>
+              <button className={styles.planButton}>{plan.price} ➤</button>
+            </div>
+          ))}
+        </div>
       </section>
     </main>
   );
