@@ -8,21 +8,30 @@ const fadeInUp = {
   hidden: { opacity: 0, y: -50 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
 };
-
+const priceVariants = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
 const plans = [
   {
     id: 1,
-    name: "Базовий",
+    name: "БАЗОВИЙ",
     price: "Безкоштовно",
     features: [
       "1 безкоштовний аналіз в день",
+      "Обмежений доступ до інструментів",
       "Базові рекомендації оптимізації",
       "Перевірка швидкості завантаження",
+      "Підтримка через email",
     ],
   },
   {
     id: 2,
-    name: "Середній",
+    name: "СЕРЕДНІЙ",
     price: "$20/місяць",
     features: [
       "50 безкоштовних аналізів в день",
@@ -34,10 +43,10 @@ const plans = [
   },
   {
     id: 3,
-    name: "Просунутий",
+    name: "ПРОСУНУТИЙ",
     price: "$40/місяць",
     features: [
-      "Все з тарифу Середній",
+      "Всі можливості попередніх тарифів",
       "Безліміт безкоштовних аналізів",
       "Глибока технічна оптимізація",
       "Гнучкі налаштування звітності",
@@ -55,10 +64,15 @@ const Home = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          setIsVisible((prev) => ({
-            ...prev,
-            [entry.target.dataset.animate]: entry.isIntersecting,
-          }));
+          if (
+            entry.isIntersecting &&
+            !isVisible[entry.target.dataset.animate]
+          ) {
+            setIsVisible((prev) => ({
+              ...prev,
+              [entry.target.dataset.animate]: true,
+            }));
+          }
         });
       },
       { threshold: 0.3 }
@@ -67,7 +81,8 @@ const Home = () => {
     sections.forEach((section) => observer.observe(section));
 
     return () => sections.forEach((section) => observer.unobserve(section));
-  }, []);
+  }, [isVisible]);
+
   return (
     <main>
       <section className={styles.promoSection}>
@@ -219,11 +234,19 @@ const Home = () => {
         </motion.div>
       </section>
 
-      <section>
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
         <div className={styles.header}>ТАРИФИ</div>
         <div className={styles.pricingContainer}>
           {plans.map((plan) => (
-            <div key={plan.id} className={styles.planCard}>
+            <motion.div
+              key={plan.id}
+              className={styles.planCard}
+              variants={priceVariants}
+            >
               <div className={styles.planNumber}>{plan.id}</div>
               <h2 className={styles.planTitle}>{plan.name}</h2>
               <ul className={styles.planFeatures}>
@@ -231,11 +254,13 @@ const Home = () => {
                   <li key={i}>✓ {feature}</li>
                 ))}
               </ul>
-              <button className={styles.planButton}>{plan.price} ➤</button>
-            </div>
+              <button className={styles.planButton}>
+                {plan.price} <i className="bi bi-arrow-right"></i>
+              </button>
+            </motion.div>
           ))}
         </div>
-      </section>
+      </motion.section>
     </main>
   );
 };
