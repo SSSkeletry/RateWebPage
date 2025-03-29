@@ -402,3 +402,64 @@ nav {
   opacity: 1;
   transform: translateX(0);
 }
+
+/* Reviews section */
+
+.carouselContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.arrowButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 32px;
+  color: #333;
+  transition: color 0.3s ease;
+  z-index: 10;
+}
+
+.arrowButton:hover {
+  color: #007bff;
+}
+
+.carouselWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 800px;
+  position: relative;
+}
+
+.reviewList {
+  display: flex;
+  transition: transform 0.5s ease;
+  gap: 20px;
+}
+
+.reviewCard {
+  width: 250px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  flex-shrink: 0;
+}
+
+.active {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.side {
+  transform: scale(0.9);
+  opacity: 0.7;
+}
