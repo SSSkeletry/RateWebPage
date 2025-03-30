@@ -405,66 +405,76 @@ nav {
 
 /* Reviews section */
 
-.reviewsContainer {
-  padding: 40px;
-  background-color: #121212;
-  color: #fff;
+.testimonials-section {
   text-align: center;
+  padding: 50px 20px;
+  background: #121212;
+  color: #fff;
 }
 
-.title {
-  font-size: 36px;
+.section-title {
+  font-size: 32px;
   font-weight: bold;
+  margin-bottom: 30px;
+  text-transform: uppercase;
 }
 
-.highlight {
-  color: #a8ff00;
+.highlight-text {
+  color: #fdd835;
 }
 
-.reviewsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.reviewCard {
-  background: #1e1e1e;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-  text-align: left;
-}
-
-.reviewHeader {
+.testimonials-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.testimonial-card {
+  background: #1c1c1c;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(255, 223, 53, 0.2);
+  max-width: 280px;
+  text-align: left;
+  border: 1px solid rgba(255, 223, 53, 0.3);
+}
+
+.card-header {
+  display: flex;
   align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
 }
 
-.reviewTitle {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.reviewLogo {
-  width: 30px;
-  height: 30px;
-}
-
-.reviewText {
-  margin: 10px 0;
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-.reviewAuthor {
-  font-size: 14px;
-  opacity: 0.8;
-}
-
-.reviewRating {
-  margin-top: 10px;
+.rating-stars {
+  color: #fdd835;
   font-size: 18px;
-  color: #ffd700;
+}
+
+.testimonial-text {
+  font-style: italic;
+  color: #e0e0e0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.avatar-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.user-name {
+  font-weight: bold;
+  font-size: 16px;
+  color: #fdd835;
 }
