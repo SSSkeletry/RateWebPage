@@ -57,7 +57,7 @@ const Pricing = () => {
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
     >
-      <div className={styles.header}>ТАРИФИ</div>
+      <h2 className={styles.header}>ТАРИФИ</h2>
       <div className={styles.pricingContainer}>
         {plans.map((plan) => (
           <motion.div
@@ -66,7 +66,7 @@ const Pricing = () => {
             variants={priceVariants}
           >
             <div className={styles.planNumber}>{plan.id}</div>
-            <h2 className={styles.planTitle}>{plan.name}</h2>
+            <h3 className={styles.planTitle}>{plan.name}</h3>
             <ul className={styles.planFeatures}>
               {plan.features.map((feature, i) => (
                 <li key={i}>✓ {feature}</li>
