@@ -407,15 +407,18 @@ nav {
 
 .testimonials-section {
   text-align: center;
-  padding: 50px 20px;
+  padding: 40px 15px;
   background: #121212;
   color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .section-title {
   font-size: 32px;
   font-weight: bold;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   text-transform: uppercase;
 }
 
@@ -424,20 +427,23 @@ nav {
 }
 
 .testimonials-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  max-width: 900px;
+  width: 100%;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
 }
 
 .testimonial-card {
   background: #1c1c1c;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(255, 223, 53, 0.2);
-  max-width: 280px;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 12px rgba(255, 223, 53, 0.3);
+  font-size: 18px;
   text-align: left;
-  border: 1px solid rgba(255, 223, 53, 0.3);
+  border: 1px solid rgba(255, 223, 53, 0.4);
+  max-width: 450px;
 }
 
 .card-header {
@@ -445,6 +451,15 @@ nav {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 15px;
+}
+
+.avatar-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+  border: 3px solid #fdd835;
 }
 
 .rating-stars {
@@ -455,8 +470,8 @@ nav {
 .testimonial-text {
   font-style: italic;
   color: #e0e0e0;
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: 17px;
+  line-height: 1.6;
 }
 
 .card-footer {
@@ -465,16 +480,25 @@ nav {
   margin-top: 15px;
 }
 
-.avatar-image {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 10px;
-}
-
 .user-name {
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
   color: #fdd835;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .testimonials-container {
+    grid-template-columns: 1fr;
+  }
+
+  .testimonial-card {
+    max-width: 100%;
+    padding: 25px;
+  }
+
+  .avatar-image {
+    width: 60px;
+    height: 60px;
+  }
 }
