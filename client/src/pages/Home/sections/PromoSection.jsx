@@ -43,12 +43,6 @@ const PromoSection = () => {
             </li>
           </ul>
         </aside>
-        <nav>
-          <button className={styles.btnCustom}>
-            <span>Почніть оптимізацію зараз</span>
-            <i className={`bi bi-caret-right ${styles.btnIcon}`}></i>
-          </button>
-        </nav>
       </article>
     </section>
   );
