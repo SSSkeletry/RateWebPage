@@ -12,6 +12,7 @@ body {
 }
 
 .promoSection {
+  padding-top: 3vh;
   background-color: black;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -47,7 +48,7 @@ body {
   height: auto;
   overflow: hidden;
   z-index: 0;
-  top: 7vh;
+  top: 5vh;
 }
 
 .circle {
@@ -67,12 +68,6 @@ body {
   z-index: 1;
 }
 
-nav {
-  display: flex;
-  justify-content: center;
-  padding: 2vh 0;
-}
-
 .promoStats ul {
   display: flex;
   gap: 15vh;
@@ -86,48 +81,13 @@ nav {
   align-items: center;
   text-align: center;
 }
-
+aside {
+  padding-top: 3vh;
+}
 .num {
   color: blue;
-  font-size: 6vh;
+  font-size: 7vh;
   font-weight: bold;
-}
-
-.btnCustom {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  gap: 0;
-  width: 46vh;
-  padding: 10px 28px;
-  font-size: 20px;
-  font-weight: bold;
-  color: white;
-  background-color: #2200ff;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: width 0.3s ease-in-out, padding-right 0.3s ease-in-out;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.btnIcon {
-  opacity: 0;
-  font-size: 24px;
-  padding-left: 4vh;
-  transform: translateX(-10px);
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-.btnCustom:hover {
-  width: 50vh;
-  padding-right: 50px;
-}
-
-.btnCustom:hover .btnIcon {
-  opacity: 1;
-  transform: translateX(0) rotate(360deg);
 }
 
 @media (max-width: 768px) {
@@ -159,22 +119,6 @@ nav {
   .num {
     font-size: 4vh;
   }
-  .btnCustom {
-    width: 100%;
-    font-size: 14px;
-    padding: 10px 12px;
-    transition: none;
-    margin-bottom: 4vh;
-  }
-
-  .btnCustom:hover {
-    width: 100%;
-    padding-right: 12px;
-  }
-
-  .btnIcon {
-    display: none;
-  }
 }
 
 @media (max-width: 480px) {
@@ -203,12 +147,6 @@ nav {
   }
   li {
     font-size: 0.7em;
-  }
-  .btnCustom {
-    font-size: 12px;
-    padding: 10px 12px;
-    transition: none;
-    margin-bottom: 5vh;
   }
 }
 
@@ -308,7 +246,7 @@ nav {
   color: white;
   text-align: center;
   padding: 10vh 2vh 2vh;
-  font-size: 3rem;
+  font-size: 3.5rem;
   letter-spacing: 4px;
   font-weight: bold;
 }
@@ -401,4 +339,105 @@ nav {
 .planButton:hover i {
   opacity: 1;
   transform: translateX(0);
+}
+
+/* Reviews section */
+
+.testimonials-section {
+  text-align: center;
+  padding: 40px 15px;
+  background: #121212;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.section-title {
+  font-size: 3.5rem;
+  font-family: "Jost", sans-serif;
+  font-weight: bold;
+  margin-bottom: 10vh;
+  text-transform: uppercase;
+}
+
+.highlight-text {
+  color: #fdd835;
+}
+
+.testimonials-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  max-width: 900px;
+  width: 100%;
+  justify-content: center;
+}
+
+.testimonial-card {
+  background: #1c1c1c;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 12px rgba(255, 223, 53, 0.3);
+  font-size: 18px;
+  text-align: left;
+  border: 1px solid rgba(255, 223, 53, 0.4);
+  max-width: 450px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.avatar-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+  border: 3px solid #fdd835;
+}
+
+.rating-stars {
+  color: #fdd835;
+  font-size: 18px;
+}
+
+.testimonial-text {
+  font-style: italic;
+  color: #e0e0e0;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.user-name {
+  font-weight: bold;
+  font-size: 18px;
+  color: #fdd835;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .testimonials-container {
+    grid-template-columns: 1fr;
+  }
+
+  .testimonial-card {
+    max-width: 100%;
+    padding: 25px;
+  }
+
+  .avatar-image {
+    width: 60px;
+    height: 60px;
+  }
 }
