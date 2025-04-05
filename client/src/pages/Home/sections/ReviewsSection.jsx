@@ -1,6 +1,7 @@
 import React from "react";
+import { useKeenSlider } from "keen-slider/react";
+import "keen-slider/keen-slider.min.css";
 import styles from "../ui/Home.module.css";
-import { motion } from "framer-motion";
 import { assets } from "../../../shared/assets/index";
 
 const testimonials = [
@@ -43,22 +44,27 @@ const testimonials = [
 ];
 
 export default function Testimonials() {
+  const [sliderRef] = useKeenSlider({
+    loop: true,
+    mode: "free",
+    slides: {
+      perView: "auto",
+    },
+  });
+
   return (
     <section className={styles["testimonials-section"]}>
       <h2 className={styles["section-title"]}>
         ВІДГУКИ <span className={styles["highlight-text"]}>КЛІЄНТІВ</span>
       </h2>
-      <div className={styles["testimonials-wrapper"]}>
-        <div className={styles["testimonials-container"]}>
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              className={styles["testimonial-card"]}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-            >
+
+      <div ref={sliderRef} className={`keen-slider ${styles["slider"]}`}>
+        {testimonials.map((testimonial, i) => (
+          <div
+            key={i}
+            className={`keen-slider__slide ${styles["testimonial-slide"]}`}
+          >
+            <div className={styles["testimonial-card"]}>
               <div className={styles["card-header"]}>
                 <img
                   src={testimonial.image}
@@ -66,7 +72,11 @@ export default function Testimonials() {
                   className={styles["avatar-image"]}
                 />
                 <div className={styles["rating-stars"]}>
-                  {"★".repeat(testimonial.rating)}
+                  {[...Array(5)].map((_, index) => (
+                    <span key={index}>
+                      {index < testimonial.rating ? "★" : "☆"}
+                    </span>
+                  ))}
                 </div>
               </div>
               <p className={styles["testimonial-text"]}>
@@ -75,9 +85,9 @@ export default function Testimonials() {
               <div className={styles["card-footer"]}>
                 <h4 className={styles["user-name"]}>{testimonial.name}</h4>
               </div>
-            </motion.div>
-          ))}
-        </div>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
