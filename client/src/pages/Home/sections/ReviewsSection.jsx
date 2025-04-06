@@ -1,8 +1,8 @@
-import React from "react";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import styles from "../ui/Home.module.css";
 import { assets } from "../../../shared/assets/index";
+import { useEffect, useRef, useState } from "react";
 
 const testimonials = [
   {
@@ -44,16 +44,66 @@ const testimonials = [
 ];
 
 export default function Testimonials() {
-  const [sliderRef] = useKeenSlider({
+  const [sliderRef, slider] = useKeenSlider({
     loop: true,
-    mode: "free",
+    renderMode: "performance",
+    drag: true,
     slides: {
       perView: "auto",
+      spacing: 15,
     },
   });
 
+  const containerRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0.3, // 30% элемента должно быть видно
+      }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, []);
+  useEffect(() => {
+    if (!slider.current) return;
+
+    let timeout;
+
+    const runSlider = () => {
+      if (!slider.current || !isVisible) return;
+
+      const nextIndex = slider.current.track.details.abs + 1;
+      slider.current.moveToIdx(nextIndex, true, {
+        duration: 30000,
+      });
+
+      timeout = setTimeout(runSlider, 10000);
+    };
+
+    if (isVisible) {
+      runSlider();
+    }
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [slider, isVisible]);
+
   return (
-    <section className={styles["testimonials-section"]}>
+    <section className={styles["testimonials-section"]} ref={containerRef}>
       <h2 className={styles["section-title"]}>
         ВІДГУКИ <span className={styles["highlight-text"]}>КЛІЄНТІВ</span>
       </h2>

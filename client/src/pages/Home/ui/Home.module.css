@@ -345,7 +345,7 @@ aside {
 
 .testimonials-section {
   text-align: center;
-  padding: 40px 15px;
+  padding-top: 10vh;
   background: #121212;
   color: #fff;
   display: flex;
