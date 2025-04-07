@@ -7,20 +7,28 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > lastScrollY) {
-        setShowNavbar(false);
-      } else {
-        setShowNavbar(true);
-      }
+      setShowNavbar(window.scrollY <= lastScrollY);
       setLastScrollY(window.scrollY);
     };
 
     window.addEventListener("scroll", handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  return <nav className={`navbar ${showNavbar ? "show" : "hide"}`}>Навбар</nav>;
+  return (
+    <nav className={`navbar ${showNavbar ? "show" : "hide"}`}>
+      <div className="navbar__content">
+        <ul className="navbar__menu">
+          <li>ПРО НАС</li>
+          <li>ПІДТРИМКА</li>
+          <li>ЧАСТІ ЗАПИТАННЯ</li>
+        </ul>
+        <button className="navbar__cta">
+          <span>ОПТИМІЗУВАТИ</span>
+        </button>
+      </div>
+    </nav>
+  );
 };
 
 export default Navbar;
