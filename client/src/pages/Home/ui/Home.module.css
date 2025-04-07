@@ -345,7 +345,7 @@ aside {
 
 .testimonials-section {
   text-align: center;
-  padding-top: 10vh;
+  padding-top: 3vh;
   background: #121212;
   color: #fff;
   display: flex;
@@ -382,7 +382,7 @@ aside {
 
 .testimonial-card {
   background: #1c1c1c;
-  padding: 25px;
+  padding: 3vh;
   border-radius: 16px;
   box-shadow: 0 6px 12px rgba(255, 223, 53, 0.3);
   font-size: 18px;

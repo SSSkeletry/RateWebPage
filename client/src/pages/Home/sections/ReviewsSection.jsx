@@ -2,12 +2,12 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import styles from "../ui/Home.module.css";
 import { assets } from "../../../shared/assets/index";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 
 const testimonials = [
   {
     name: "Анастасия",
-    text: "Вражена якістю програмного забезпечення! Аналіз технік швидкого завантаження веб-сторінок дозволив оптимізувати наш сайт, зменшивши час завантаження на 40%.",
+    text: "Вражена якістю програмного забезпечення! Аналіз технік завантаження веб-сторінок дозволив оптимізувати наш сайт, зменшивши час завантаження на 40%.",
     rating: 5,
     image: assets.woman,
   },
@@ -43,63 +43,59 @@ const testimonials = [
   },
 ];
 
+const renderStars = (count) =>
+  [...Array(5)].map((_, i) => <span key={i}>{i < count ? "★" : "☆"}</span>);
+
 export default function Testimonials() {
-  const [sliderRef, slider] = useKeenSlider({
-    loop: true,
-    renderMode: "performance",
-    drag: true,
-    slides: {
-      perView: "auto",
-      spacing: 15,
-    },
-  });
+  const sliderOptions = useMemo(
+    () => ({
+      loop: true,
+      renderMode: "performance",
+      drag: true,
+      slides: {
+        perView: "auto",
+        spacing: 15,
+      },
+    }),
+    []
+  );
+
+  const [sliderRef, slider] = useKeenSlider(sliderOptions);
 
   const containerRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    if (!containerRef.current) return;
+
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      {
-        threshold: 0.3, // 30% элемента должно быть видно
-      }
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.3 }
     );
 
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
-      }
-    };
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
   }, []);
-  useEffect(() => {
-    if (!slider.current) return;
 
-    let timeout;
+  const timeoutRef = useRef();
+
+  useEffect(() => {
+    if (!slider.current || !isVisible) return;
 
     const runSlider = () => {
-      if (!slider.current || !isVisible) return;
+      if (!slider.current) return;
 
       const nextIndex = slider.current.track.details.abs + 1;
       slider.current.moveToIdx(nextIndex, true, {
         duration: 30000,
       });
 
-      timeout = setTimeout(runSlider, 10000);
+      timeoutRef.current = setTimeout(runSlider, 10000);
     };
 
-    if (isVisible) {
-      runSlider();
-    }
+    runSlider();
 
-    return () => {
-      clearTimeout(timeout);
-    };
+    return () => clearTimeout(timeoutRef.current);
   }, [slider, isVisible]);
 
   return (
@@ -119,14 +115,11 @@ export default function Testimonials() {
                 <img
                   src={testimonial.image}
                   alt={testimonial.name}
+                  loading="lazy"
                   className={styles["avatar-image"]}
                 />
                 <div className={styles["rating-stars"]}>
-                  {[...Array(5)].map((_, index) => (
-                    <span key={index}>
-                      {index < testimonial.rating ? "★" : "☆"}
-                    </span>
-                  ))}
+                  {renderStars(testimonial.rating)}
                 </div>
               </div>
               <p className={styles["testimonial-text"]}>
