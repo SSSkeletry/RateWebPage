@@ -7,6 +7,14 @@
   align-items: center;
   z-index: 999;
   font-family: "Segoe UI", sans-serif;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.modalOverlay.active {
+  opacity: 1;
+  visibility: visible;
 }
 
 .container {
@@ -17,13 +25,20 @@
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-  transition: height 0.3s ease, all 0.5s ease-in-out;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  transform: scale(0.95);
+  opacity: 0;
   min-height: 70vh;
+}
+
+.modalOverlay.active .container {
+  transform: scale(1);
+  opacity: 1;
 }
 
 .leftPanel {
   width: 50%;
-  background: linear-gradient(135deg, #375bdb, #69b3f0);
+  background: linear-gradient(135deg, #0000ff, #1c1c81);
   color: white;
   padding: 40px;
   display: flex;
@@ -61,21 +76,7 @@
 .switchBtn:hover {
   background: #f0f0f0;
 }
-.closeBtn {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: transparent;
-  border: none;
-  font-size: 1.2rem;
-  color: #666;
-  cursor: pointer;
-  transition: color 0.3s;
-}
 
-.closeBtn:hover {
-  color: #000;
-}
 .formPanel {
   width: 50%;
   padding: 40px;
@@ -95,6 +96,7 @@
 
 .form h2 {
   margin-bottom: 8px;
+  color: black;
   font-size: 1.5rem;
   text-align: center;
 }
@@ -134,7 +136,6 @@ input {
   font-size: 1.2rem;
 }
 
-/* Animation */
 .container.sign-in .leftPanel {
   transform: translateX(100%);
 }
