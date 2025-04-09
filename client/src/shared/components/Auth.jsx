@@ -11,8 +11,11 @@ const Auth = ({ isOpen, setIsOpen }) => {
   return (
     <>
       {isOpen && (
-        <div className="modalOverlay">
-          <div className={`container ${isRegister ? "sign-in" : ""}`}>
+        <div className="modalOverlay" onClick={closeModal}>
+          <div
+            className={`container ${isRegister ? "sign-in" : ""}`}
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="leftPanel">
               <div className="content">
                 <h2>{isRegister ? "С возвращением!" : "Привет, друг!"}</h2>
@@ -50,9 +53,6 @@ const Auth = ({ isOpen, setIsOpen }) => {
                   <i className="fab fa-tiktok" />
                 </div>
               </form>
-              <button className="closeBtn" onClick={closeModal}>
-                <i className="bi bi-x-lg"></i>
-              </button>
             </div>
           </div>
         </div>

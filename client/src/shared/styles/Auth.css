@@ -17,7 +17,8 @@
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-  transition: all 0.5s ease-in-out;
+  transition: height 0.3s ease, all 0.5s ease-in-out;
+  min-height: 70vh;
 }
 
 .leftPanel {
@@ -29,6 +30,7 @@
   justify-content: center;
   align-items: center;
   transition: all 0.5s ease;
+  z-index: 1;
 }
 
 .leftPanel .content {
