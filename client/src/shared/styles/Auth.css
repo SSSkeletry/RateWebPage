@@ -1,0 +1,145 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  font-family: "Segoe UI", sans-serif;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.modalOverlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.container {
+  display: flex;
+  width: 800px;
+  max-width: 95%;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  transform: scale(0.95);
+  opacity: 0;
+  min-height: 70vh;
+}
+
+.modalOverlay.active .container {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.leftPanel {
+  width: 50%;
+  background: linear-gradient(135deg, #0000ff, #1c1c81);
+  color: white;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+  z-index: 1;
+}
+
+.leftPanel .content {
+  text-align: center;
+}
+
+.leftPanel h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.leftPanel p {
+  font-size: 1rem;
+  margin-bottom: 30px;
+}
+
+.switchBtn {
+  background: white;
+  color: #375bdb;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.switchBtn:hover {
+  background: #f0f0f0;
+}
+
+.formPanel {
+  width: 50%;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease;
+}
+
+.form {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form h2 {
+  margin-bottom: 8px;
+  color: black;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.submitBtn {
+  background: #375bdb;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submitBtn:hover {
+  background: #2c47ad;
+}
+
+.socialText {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.socialIcons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  font-size: 1.2rem;
+}
+
+.container.sign-in .leftPanel {
+  transform: translateX(100%);
+}
+
+.container.sign-in .formPanel {
+  transform: translateX(-100%);
+}

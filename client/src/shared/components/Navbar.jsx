@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../styles/Navbar.css";
 
-const Navbar = () => {
+const Navbar = ({ onOpenModal }) => {
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -23,7 +23,7 @@ const Navbar = () => {
           <li>ПІДТРИМКА</li>
           <li>ЧАСТІ ЗАПИТАННЯ</li>
         </ul>
-        <button className="navbar__cta">
+        <button className="navbar__cta" onClick={onOpenModal}>
           <span>ОПТИМІЗУВАТИ</span>
         </button>
       </div>
