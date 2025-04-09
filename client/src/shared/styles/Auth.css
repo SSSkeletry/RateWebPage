@@ -1,0 +1,142 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.container {
+  display: flex;
+  width: 800px;
+  max-width: 95%;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.5s ease-in-out;
+}
+
+.leftPanel {
+  width: 50%;
+  background: linear-gradient(135deg, #375bdb, #69b3f0);
+  color: white;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+}
+
+.leftPanel .content {
+  text-align: center;
+}
+
+.leftPanel h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.leftPanel p {
+  font-size: 1rem;
+  margin-bottom: 30px;
+}
+
+.switchBtn {
+  background: white;
+  color: #375bdb;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.switchBtn:hover {
+  background: #f0f0f0;
+}
+.closeBtn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.closeBtn:hover {
+  color: #000;
+}
+.formPanel {
+  width: 50%;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease;
+}
+
+.form {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form h2 {
+  margin-bottom: 8px;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.submitBtn {
+  background: #375bdb;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submitBtn:hover {
+  background: #2c47ad;
+}
+
+.socialText {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.socialIcons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  font-size: 1.2rem;
+}
+
+/* Animation */
+.container.sign-in .leftPanel {
+  transform: translateX(100%);
+}
+
+.container.sign-in .formPanel {
+  transform: translateX(-100%);
+}
