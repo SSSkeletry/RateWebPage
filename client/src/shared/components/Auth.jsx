@@ -29,7 +29,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
         await dispatch(register({ email, password })).unwrap();
         await dispatch(login({ email, password })).unwrap();
       } catch (err) {
-        console.error("Ошибка при регистрации и входе:", err);
+        console.error("Error during registration and login:", err);
       }
     } else {
       dispatch(login({ email, password }));
