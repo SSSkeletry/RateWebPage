@@ -1,9 +1,18 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../features/auth/authSlice";
 import "../styles/Navbar.css";
 
 const Navbar = ({ onOpenModal }) => {
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+
+  const token = useSelector((state) => state.auth.token);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,9 +32,16 @@ const Navbar = ({ onOpenModal }) => {
           <li>ПІДТРИМКА</li>
           <li>ЧАСТІ ЗАПИТАННЯ</li>
         </ul>
-        <button className="navbar__cta" onClick={onOpenModal}>
-          <span>ОПТИМІЗУВАТИ</span>
-        </button>
+
+        {token ? (
+          <button className="navbar__cta" onClick={handleLogout}>
+            <span>ВИЙТИ</span>
+          </button>
+        ) : (
+          <button className="navbar__cta" onClick={onOpenModal}>
+            <span>ОПТИМІЗУВАТИ</span>
+          </button>
+        )}
       </div>
     </nav>
   );
