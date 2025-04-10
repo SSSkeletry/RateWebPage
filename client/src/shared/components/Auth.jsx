@@ -1,12 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login, register } from "../../features/auth/authSlice";
 import "../styles/Auth.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const Auth = ({ isOpen, setIsOpen }) => {
   const [isRegister, setIsRegister] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+
+  const dispatch = useDispatch();
+  const { status, error, token } = useSelector((state) => state.auth);
 
   const toggleMode = () => setIsRegister(!isRegister);
   const closeModal = () => setIsOpen(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (isRegister) {
+      if (password !== repeatPassword) {
+        alert("Паролі не співпадають");
+        return;
+      }
+
+      try {
+        await dispatch(register({ email, password })).unwrap();
+        await dispatch(login({ email, password })).unwrap();
+      } catch (err) {
+        console.error("Ошибка при регистрации и входе:", err);
+      }
+    } else {
+      dispatch(login({ email, password }));
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
+      setIsOpen(false);
+    }
+  }, [token, setIsOpen]);
 
   return (
     <div
@@ -32,16 +66,44 @@ const Auth = ({ isOpen, setIsOpen }) => {
         </div>
 
         <div className="formPanel">
-          <form className="form">
+          <form className="form" onSubmit={handleSubmit}>
             <h2>{isRegister ? "Реєстрація" : "Авторизація"}</h2>
-            <input type="email" placeholder="Email" required />
-            <input type="password" placeholder="Пароль" required />
+
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+
+            <input
+              type="password"
+              placeholder="Пароль"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+
             {isRegister && (
-              <input type="password" placeholder="Повторите пароль" required />
+              <input
+                type="password"
+                placeholder="Повторіть пароль"
+                value={repeatPassword}
+                onChange={(e) => setRepeatPassword(e.target.value)}
+                required
+              />
             )}
-            <button type="submit" className="submitBtn">
+
+            <button
+              type="submit"
+              className="submitBtn"
+              disabled={status === "loading"}
+            >
               {isRegister ? "Зареєструватися" : "Увійти"}
             </button>
+
+            {error && <p className="errorText">{error}</p>}
 
             <p className="socialText">або іншим способом</p>
             <div className="socialIcons">
