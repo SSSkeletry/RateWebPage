@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../features/auth/authSlice";
+import { Link } from "react-router-dom";
 import "../styles/Navbar.css";
 
 const Navbar = ({ onOpenModal }) => {
@@ -31,6 +32,9 @@ const Navbar = ({ onOpenModal }) => {
           <li>ПРО НАС</li>
           <li>ПІДТРИМКА</li>
           <li>ЧАСТІ ЗАПИТАННЯ</li>
+          <li>
+            <Link to="/analysis">САЙТИ</Link>
+          </li>
         </ul>
 
         {token ? (

@@ -5,10 +5,10 @@ import PromoSection from "./sections/PromoSection";
 import HowItWorksSection from "./sections/HowItWorksSection";
 import PricingSection from "./sections/PricingSection";
 import ReviewsSection from "./sections/ReviewsSection";
+
 const Home = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const openAuthModal = () => setIsAuthModalOpen(true);
-  const closeAuthModal = () => setIsAuthModalOpen(false);
 
   return (
     <>
