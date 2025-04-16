@@ -1,45 +1,56 @@
-.page {
-  min-height: 100vh;
-  width: 100vw;
-  background-color: #ffffff;
+.wrapper {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 2rem;
-  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  background-color: #f9fafb;
+  color: black;
 }
 
-.wrapper {
-  width: 100%;
-  max-width: 1200px;
-  font-family: "Arial", sans-serif;
-  color: #000000;
+.sidebar {
+  width: 220px;
+  background: white;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+}
+
+.navItem {
+  padding: 1rem 1.5rem;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+.navItem:hover {
+  background-color: #f3f4f6;
+}
+
+.active {
+  background-color: #e5e7eb;
+  font-weight: bold;
+}
+
+.main {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1.5rem;
-}
-
-.brand {
-  font-weight: 600;
-  font-size: 1.2rem;
-}
-
-.planInfo {
-  text-align: right;
-  font-size: 0.9rem;
-  color: #000;
-  line-height: 1.4;
-}
-
-.title {
-  font-size: 2.4rem;
-  font-weight: 700;
+  align-items: center;
   margin-bottom: 2rem;
-  line-height: 1.2;
+}
+
+.filterBtn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d5db;
+  background-color: white;
+  border-radius: 0.5rem;
+  cursor: pointer;
 }
 
 .grid {
@@ -49,43 +60,132 @@
 }
 
 .card {
-  border: 1px solid #00000020;
-  border-radius: 12px;
-  padding: 1.2rem;
-  background: #ffffff;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 }
 
-.site {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+.imagePlaceholder {
+  width: 100%;
+  height: 100px;
+  background: #e5e7eb;
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
-.status {
+.optimized {
+  margin-top: 0.5rem;
+  background: #10b981;
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.375rem;
+}
+
+.upgradeBtn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+/* ⬇️ Новый стиль профиля как на картинке */
+.cardProfile {
+  background: white;
+  padding: 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+  border-radius: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.profileTop {
   display: flex;
   align-items: center;
-  font-weight: 500;
-  margin-bottom: 1rem;
-  font-size: 1rem;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
-.checkmark {
-  font-size: 1.2rem;
-  color: #000000;
-  margin-right: 0.5rem;
+.avatarImage {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: #e5e7eb;
 }
 
-.bar {
-  height: 10px;
-  width: 80%;
-  background: #d3d3d3;
+.profileName {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.profileEmail {
+  font-size: 0.9rem;
+  color: #6b7280;
   margin-bottom: 0.5rem;
-  border-radius: 5px;
 }
 
-.barThin {
-  height: 8px;
-  width: 60%;
-  background: #d3d3d3;
-  border-radius: 4px;
+.changePasswordBtn {
+  padding: 0.4rem 1rem;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.section {
+  margin-bottom: 1.5rem;
+}
+
+.value {
+  font-weight: bold;
+  margin-top: 0.25rem;
+}
+
+.activityRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.timestamp {
+  color: #6b7280;
+}
+
+.statsGrid {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.statsGrid h3 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.statsGrid p {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.editBtn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  width: 100%;
 }
