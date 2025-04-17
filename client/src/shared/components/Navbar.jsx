@@ -32,9 +32,11 @@ const Navbar = ({ onOpenModal }) => {
           <li>ПРО НАС</li>
           <li>ПІДТРИМКА</li>
           <li>ЧАСТІ ЗАПИТАННЯ</li>
-          <li>
-            <Link to="/analysis">САЙТИ</Link>
-          </li>
+          {token && (
+            <li>
+              <Link to="/analysis">САЙТИ</Link>
+            </li>
+          )}
         </ul>
 
         {token ? (

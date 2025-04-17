@@ -54,7 +54,25 @@ const login = async (req, res) => {
   }
 };
 
+const getMe = async (req, res) => {
+  try {
+    const user = await User.findByPk(req.user.id, {
+      attributes: ["id", "email", "createdAt"],
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "Користувача не знайдено" });
+    }
+
+    res.json(user);
+  } catch (error) {
+    console.error("Помилка при отриманні профілю:", error);
+    res.status(500).json({ message: "Помилка сервера" });
+  }
+};
+
 module.exports = {
   register,
   login,
+  getMe,
 };
