@@ -13,6 +13,22 @@ const User = sequelize.define("User", {
   },
 });
 
+const Plan = sequelize.define("Plan", {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  maxWebsites: {
+    type: DataTypes.INTEGER,
+    defaultValue: 1,
+  },
+  features: {
+    type: DataTypes.JSON,
+    allowNull: true,
+  },
+});
+
 const Website = sequelize.define("Website", {
   url: {
     type: DataTypes.STRING,
@@ -60,9 +76,13 @@ Website.belongsTo(User);
 Website.hasMany(WebsiteMetric, { onDelete: "CASCADE" });
 WebsiteMetric.belongsTo(Website);
 
+Plan.hasMany(User);
+User.belongsTo(Plan);
+
 module.exports = {
   sequelize,
   User,
   Website,
   WebsiteMetric,
+  Plan,
 };

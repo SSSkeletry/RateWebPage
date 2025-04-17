@@ -3,10 +3,11 @@ const express = require("express");
 const cors = require("cors");
 const sequelize = require("./models/database");
 const routes = require("./routes");
+const authenticateTokenOptional = require("./middleware/auth");
+const { Plan } = require("./models/models");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const authenticateTokenOptional = require("./middleware/auth");
 
 app.use(cors());
 app.use(express.json());
@@ -19,6 +20,10 @@ app.get("/", (req, res) => {
 
 app.post("/api/analyze", authenticateTokenOptional, async (req, res) => {
   const { url } = req.body;
+
+  if (!url) {
+    return res.status(400).json({ error: "URL is required" });
+  }
 
   const loadTime = 1234;
   const size = 1024;
@@ -46,10 +51,23 @@ app.post("/api/analyze", authenticateTokenOptional, async (req, res) => {
     requests,
     improvementSuggestions: suggestionsText,
   };
+
   res.json({ message: "Analysis result (not saved)", result });
 });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-  sequelize.sync().then(() => console.log("Database synced"));
+  sequelize.sync().then(async () => {
+    console.log("Database synced");
+
+    const count = await Plan.count();
+    if (count === 0) {
+      await Plan.bulkCreate([
+        { name: "Стандартний", maxWebsites: 1 },
+        { name: "Середній", maxWebsites: 5 },
+        { name: "Просунутий", maxWebsites: 20 },
+      ]);
+      console.log("Initial plans added to database");
+    }
+  });
 });
