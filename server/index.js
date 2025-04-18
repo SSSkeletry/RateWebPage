@@ -2,12 +2,12 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const sequelize = require("./models/database");
-const Page = require("./models/page");
 const routes = require("./routes");
+const authenticateTokenOptional = require("./middleware/auth");
+const { Plan } = require("./models/models");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const authenticateTokenOptional = require("./middleware/auth");
 
 app.use(cors());
 app.use(express.json());
@@ -18,20 +18,12 @@ app.get("/", (req, res) => {
   res.send("API работает!");
 });
 
-app.get("/", (req, res) => {
-  res.send("Server is running!");
-});
-
-app.get("/api/pages", async (req, res) => {
-  try {
-    const pages = await Page.findAll();
-    res.json(pages);
-  } catch (error) {
-    res.status(500).json({ error: "Error fetching pages" });
-  }
-});
 app.post("/api/analyze", authenticateTokenOptional, async (req, res) => {
   const { url } = req.body;
+
+  if (!url) {
+    return res.status(400).json({ error: "URL is required" });
+  }
 
   const loadTime = 1234;
   const size = 1024;
@@ -52,25 +44,6 @@ app.post("/api/analyze", authenticateTokenOptional, async (req, res) => {
 
   const suggestionsText = improvementSuggestions.join(" ");
 
-  if (req.user) {
-    try {
-      const savedPage = await Page.create({
-        userId: req.user.id,
-        url,
-        loadTime,
-        size,
-        requests,
-        improvementSuggestions: suggestionsText,
-      });
-      return res.json({
-        message: "Analysis saved for registered user",
-        result: savedPage,
-      });
-    } catch (error) {
-      return res.status(500).json({ error: "Error saving analysis" });
-    }
-  }
-
   const result = {
     url,
     loadTime,
@@ -78,10 +51,23 @@ app.post("/api/analyze", authenticateTokenOptional, async (req, res) => {
     requests,
     improvementSuggestions: suggestionsText,
   };
+
   res.json({ message: "Analysis result (not saved)", result });
 });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-  sequelize.sync().then(() => console.log("Database synced"));
+  sequelize.sync().then(async () => {
+    console.log("Database synced");
+
+    const count = await Plan.count();
+    if (count === 0) {
+      await Plan.bulkCreate([
+        { name: "Стандартний", maxWebsites: 1 },
+        { name: "Середній", maxWebsites: 5 },
+        { name: "Просунутий", maxWebsites: 20 },
+      ]);
+      console.log("Initial plans added to database");
+    }
+  });
 });

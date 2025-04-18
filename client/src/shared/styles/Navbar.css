@@ -42,6 +42,14 @@
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
+.navbar__menu li a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.navbar__menu li a:hover {
+  color: #e3e22e;
+}
 .navbar__menu li:hover {
   transform: translateY(-3px);
   color: #e3e22e;

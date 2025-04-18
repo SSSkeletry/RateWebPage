@@ -13,7 +13,76 @@ const User = sequelize.define("User", {
   },
 });
 
+const Plan = sequelize.define("Plan", {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  maxWebsites: {
+    type: DataTypes.INTEGER,
+    defaultValue: 1,
+  },
+  features: {
+    type: DataTypes.JSON,
+    allowNull: true,
+  },
+});
+
+const Website = sequelize.define("Website", {
+  url: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+});
+
+const WebsiteMetric = sequelize.define("WebsiteMetric", {
+  load_time_ms: {
+    type: DataTypes.INTEGER,
+  },
+  page_size_kb: {
+    type: DataTypes.INTEGER,
+  },
+  internal_links: {
+    type: DataTypes.INTEGER,
+  },
+  external_links: {
+    type: DataTypes.INTEGER,
+  },
+  images_with_alt: {
+    type: DataTypes.INTEGER,
+  },
+  images_without_alt: {
+    type: DataTypes.INTEGER,
+  },
+  h1_count: {
+    type: DataTypes.INTEGER,
+  },
+  http_status: {
+    type: DataTypes.INTEGER,
+  },
+  seo_score: {
+    type: DataTypes.DECIMAL(5, 2),
+  },
+});
+
+User.hasMany(Website, { onDelete: "CASCADE" });
+Website.belongsTo(User);
+
+Website.hasMany(WebsiteMetric, { onDelete: "CASCADE" });
+WebsiteMetric.belongsTo(Website);
+
+Plan.hasMany(User);
+User.belongsTo(Plan);
+
 module.exports = {
-  User,
   sequelize,
+  User,
+  Website,
+  WebsiteMetric,
+  Plan,
 };
