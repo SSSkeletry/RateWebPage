@@ -1,42 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCurrentUser } from "../../features/user/userSlice";
 import styles from "./ui/Analysis.module.css";
 
 const Analysis = () => {
   const [activeTab, setActiveTab] = useState("profile");
+  const dispatch = useDispatch();
 
-  const websites = [
-    { title: "Website One", description: "Description of website one" },
-    { title: "Website Two", description: "Description of website two" },
-    { title: "Website Three", description: "Description of website three" },
-  ];
+  const { user, websites, status, error } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(fetchCurrentUser());
+  }, [dispatch]);
+
+  if (status === "loading") return <div>Loading...</div>;
+  if (status === "failed") return <div>Error loading data: {error}</div>;
 
   return (
     <div className={styles.wrapper}>
       <aside className={styles.sidebar}>
-        <div
-          className={`${styles.navItem} ${
-            activeTab === "profile" ? styles.active : ""
-          }`}
-          onClick={() => setActiveTab("profile")}
-        >
-          Profile
-        </div>
-        <div
-          className={`${styles.navItem} ${
-            activeTab === "sites" ? styles.active : ""
-          }`}
-          onClick={() => setActiveTab("sites")}
-        >
-          My Sites
-        </div>
-        <div
-          className={`${styles.navItem} ${
-            activeTab === "billing" ? styles.active : ""
-          }`}
-          onClick={() => setActiveTab("billing")}
-        >
-          Billing
-        </div>
+        {["profile", "sites", "billing"].map((tab) => (
+          <div
+            key={tab}
+            className={`${styles.navItem} ${
+              activeTab === tab ? styles.active : ""
+            }`}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab.charAt(0).toUpperCase() + tab.slice(1)}
+          </div>
+        ))}
       </aside>
 
       <main className={styles.main}>
@@ -47,25 +40,28 @@ const Analysis = () => {
               <button className={styles.filterBtn}>Filter</button>
             </div>
             <div className={styles.grid}>
-              {websites.map((site, index) => (
-                <div key={index} className={styles.card}>
-                  <div className={styles.imagePlaceholder}></div>
-                  <h3>{site.title}</h3>
-                  <p>{site.description}</p>
-                  <span className={styles.optimized}>Optimized</span>
-                </div>
-              ))}
+              {websites.length > 0 ? (
+                websites.map((site, index) => (
+                  <div key={index} className={styles.card}>
+                    <div className={styles.imagePlaceholder}></div>
+                    <h3>{site.title}</h3>
+                    <p>{site.description}</p>
+                    <span className={styles.optimized}>Optimized</span>
+                  </div>
+                ))
+              ) : (
+                <p>No websites available.</p>
+              )}
             </div>
           </>
         )}
 
-        {activeTab === "profile" && (
+        {activeTab === "profile" && user && (
           <div className={styles.cardProfile}>
             <div className={styles.profileTop}>
               <div className={styles.avatarImage}></div>
               <div>
-                <h2 className={styles.profileName}>John Doe</h2>
-                <p className={styles.profileEmail}>john.doe@example.com</p>
+                <h2 className={styles.profileEmail}>{user.email}</h2>
                 <button className={styles.changePasswordBtn}>
                   Change Password
                 </button>
@@ -73,39 +69,36 @@ const Analysis = () => {
             </div>
 
             <div className={styles.section}>
-              <h4>Billing Plan</h4>
-              <p className={styles.value}>Pro</p>
+              <h4>Billing Plan: {user.plan}</h4>
             </div>
 
             <div className={styles.section}>
               <h4>Activity</h4>
-              <div className={styles.activityRow}>
-                <span>Updated Website Two</span>
-                <span className={styles.timestamp}>2 hours ago</span>
-              </div>
-              <div className={styles.activityRow}>
-                <span>Edited profile</span>
-                <span className={styles.timestamp}>1 day ago</span>
-              </div>
-              <div className={styles.activityRow}>
-                <span>Optimized Website Three</span>
-                <span className={styles.timestamp}>3 days ago</span>
-              </div>
+              {user.activity?.length > 0 ? (
+                user.activity.map((item, index) => (
+                  <div key={index} className={styles.activityRow}>
+                    <span>{item.action}</span>
+                    <span className={styles.timestamp}>{item.time}</span>
+                  </div>
+                ))
+              ) : (
+                <p>No activity yet.</p>
+              )}
             </div>
 
             <div className={styles.section}>
               <h4>Statistics</h4>
               <div className={styles.statsGrid}>
                 <div>
-                  <h3>3</h3>
+                  <h3>{user.stats?.totalSites || 0}</h3>
                   <p>Total Sites</p>
                 </div>
                 <div>
-                  <h3>4.7s</h3>
+                  <h3>{user.stats?.avgLoadTime || 0}s</h3>
                   <p>Avg. Load Time</p>
                 </div>
                 <div>
-                  <h3>86%</h3>
+                  <h3>{user.stats?.optimization || 0}%</h3>
                   <p>Optimization</p>
                 </div>
               </div>
@@ -115,11 +108,11 @@ const Analysis = () => {
           </div>
         )}
 
-        {activeTab === "billing" && (
+        {activeTab === "billing" && user && (
           <div className={styles.profileCard}>
             <h2>Billing Plan</h2>
             <p>
-              You are currently on the <strong>Pro</strong> plan.
+              You are currently on the <strong>{user.plan}</strong> plan.
             </p>
             <button className={styles.upgradeBtn}>Upgrade Plan</button>
           </div>

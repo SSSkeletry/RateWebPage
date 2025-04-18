@@ -97,7 +97,6 @@
   cursor: pointer;
 }
 
-/* ⬇️ Новый стиль профиля как на картинке */
 .cardProfile {
   background: white;
   padding: 2rem;
@@ -121,16 +120,11 @@
   background-color: #e5e7eb;
 }
 
-.profileName {
+.profileEmail {
   margin: 0;
+  padding-bottom: 1.5vh;
   font-size: 1.25rem;
   font-weight: bold;
-}
-
-.profileEmail {
-  font-size: 0.9rem;
-  color: #6b7280;
-  margin-bottom: 0.5rem;
 }
 
 .changePasswordBtn {
