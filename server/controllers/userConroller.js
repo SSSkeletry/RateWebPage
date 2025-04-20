@@ -1,17 +1,29 @@
-const { User, Plan } = require("../models/models");
+const { User, Plan, Website } = require("../models/models");
 
 const getProfile = async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id, {
-      include: {
-        model: Plan,
-        attributes: ["name"],
-      },
+      include: [
+        {
+          model: Plan,
+          attributes: ["name"],
+        },
+        {
+          model: Website,
+          attributes: ["id", "name", "url", "status"],
+        },
+      ],
     });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+
+    const websites = user.Websites.map((site) => ({
+      title: site.name || site.url,
+      description: site.url,
+      status: site.status,
+    }));
 
     res.json({
       user: {
@@ -23,16 +35,12 @@ const getProfile = async (req, res) => {
           { action: "Registered", time: "yesterday" },
         ],
         stats: {
-          totalSites: 3,
+          totalSites: user.Websites.length,
           avgLoadTime: 4.7,
           optimization: 86,
         },
       },
-      websites: [
-        { title: "Website One", description: "Description of website one" },
-        { title: "Website Two", description: "Description of website two" },
-        { title: "Website Three", description: "Description of website three" },
-      ],
+      websites,
     });
   } catch (err) {
     console.error(err);

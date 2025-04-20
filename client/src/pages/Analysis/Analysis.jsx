@@ -13,6 +13,10 @@ const Analysis = () => {
     dispatch(fetchCurrentUser());
   }, [dispatch]);
 
+  useEffect(() => {
+    console.log("Websites data:", websites);
+  }, [websites]);
+
   if (status === "loading") return <div>Loading...</div>;
   if (status === "failed") return <div>Error loading data: {error}</div>;
 
@@ -46,7 +50,21 @@ const Analysis = () => {
                     <div className={styles.imagePlaceholder}></div>
                     <h3>{site.title}</h3>
                     <p>{site.description}</p>
-                    <span className={styles.optimized}>Optimized</span>
+                    <span
+                      className={`${styles.status} ${
+                        site.status === "not_optimized"
+                          ? styles.notOptimized
+                          : site.status === "optimizing"
+                          ? styles.optimizing
+                          : styles.optimized
+                      }`}
+                    >
+                      {site.status === "not_optimized"
+                        ? "Не оптимизирован"
+                        : site.status === "optimizing"
+                        ? "Оптимизируется"
+                        : "Оптимизирован"}
+                    </span>
                   </div>
                 ))
               ) : (

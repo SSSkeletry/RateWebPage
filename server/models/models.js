@@ -38,6 +38,11 @@ const Website = sequelize.define("Website", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  status: {
+    type: DataTypes.ENUM("not_optimized", "optimizing", "optimized"),
+    defaultValue: "not_optimized",
+    allowNull: false,
+  },
 });
 
 const WebsiteMetric = sequelize.define("WebsiteMetric", {

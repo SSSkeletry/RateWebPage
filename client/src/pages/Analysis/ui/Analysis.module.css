@@ -78,15 +78,6 @@
   margin-bottom: 0.75rem;
 }
 
-.optimized {
-  margin-top: 0.5rem;
-  background: #10b981;
-  color: white;
-  font-size: 0.75rem;
-  padding: 0.25rem 0.75rem;
-  border-radius: 0.375rem;
-}
-
 .upgradeBtn {
   margin-top: 1rem;
   padding: 0.5rem 1rem;
@@ -182,4 +173,27 @@
   border-radius: 0.5rem;
   cursor: pointer;
   width: 100%;
+}
+.status {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.375rem;
+  margin-top: 0.5rem;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.notOptimized {
+  background-color: #f87171;
+  color: white;
+}
+
+.optimizing {
+  background-color: #facc15;
+  color: black;
+}
+
+.optimized {
+  background-color: #10b981;
+  color: white;
 }
