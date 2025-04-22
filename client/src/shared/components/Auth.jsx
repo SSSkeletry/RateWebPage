@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login, register } from "../../features/auth/authSlice";
+import { login, register } from "../../features/auth/model";
 import "../styles/Auth.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 

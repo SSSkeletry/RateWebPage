@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCurrentUser } from "../../features/user/userSlice";
+import { fetchCurrentUser } from "../../entities/user/model";
 import styles from "./ui/Analysis.module.css";
 
 const Analysis = () => {
