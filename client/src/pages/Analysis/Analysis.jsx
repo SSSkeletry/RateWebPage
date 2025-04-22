@@ -13,10 +13,6 @@ const Analysis = () => {
     dispatch(fetchCurrentUser());
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log("Websites data:", websites);
-  }, [websites]);
-
   if (status === "loading") return <div>Loading...</div>;
   if (status === "failed") return <div>Error loading data: {error}</div>;
 

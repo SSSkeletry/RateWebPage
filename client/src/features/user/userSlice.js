@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { logout } from "../auth/authSlice";
 import axios from "axios";
 
 export const fetchCurrentUser = createAsyncThunk(
   "user/fetchCurrentUser",
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, dispatch }) => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get("/api/user/me", {
@@ -13,7 +14,13 @@ export const fetchCurrentUser = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data || "Ошибка запроса");
+      if (error.response?.status === 401) {
+        dispatch(logout());
+      }
+
+      const message =
+        error.response?.data?.message || error.message || "Ошибка запроса";
+      return rejectWithValue(message);
     }
   }
 );
