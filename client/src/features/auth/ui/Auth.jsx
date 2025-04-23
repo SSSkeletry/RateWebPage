@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login, register } from "../../features/auth/model";
-import "../styles/Auth.css";
+import { login, register } from "../model";
+import "./Auth.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const Auth = ({ isOpen, setIsOpen }) => {

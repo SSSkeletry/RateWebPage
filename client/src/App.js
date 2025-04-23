@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home.jsx";
 import Analysis from "./pages/Analysis/Analysis.jsx";
-import PrivateRoute from "./shared/components/PrivateRoute";
+import PrivateRoute from "./app/providers/router/PrivateRoute.js";
 
 const App = () => {
   return (

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../features/auth/model";
 import { Link } from "react-router-dom";
-import "../styles/Navbar.css";
+import "./Navbar.css";
 
 const Navbar = ({ onOpenModal }) => {
   const [showNavbar, setShowNavbar] = useState(true);
