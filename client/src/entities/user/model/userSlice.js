@@ -1,22 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
-export const fetchCurrentUser = createAsyncThunk(
-  "user/fetchCurrentUser",
-  async (_, { rejectWithValue }) => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get("/api/user/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data || "Ошибка запроса");
-    }
-  }
-);
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchCurrentUser } from "./fetchCurrentUser";
 
 const userSlice = createSlice({
   name: "user",
