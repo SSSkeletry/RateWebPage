@@ -99,6 +99,11 @@ const WebsiteMetric = sequelize.define(
 
     http_status: DataTypes.INTEGER,
     seo_score: DataTypes.DECIMAL(5, 2),
+
+    optimization_score: {
+      type: DataTypes.DECIMAL(5, 2),
+      allowNull: true,
+    },
   },
   { timestamps: true }
 );

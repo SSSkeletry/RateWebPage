@@ -1,41 +1,29 @@
 import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import SiteMetrics from "./SiteMetrics";
 
 const SitesSection = ({ websites, styles }) => {
   const [selectedSite, setSelectedSite] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = (site) => {
     setSelectedSite(site);
-    setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setSelectedSite(null);
-    setIsModalOpen(false);
   };
 
   return (
     <>
-      {isModalOpen && selectedSite && (
-        <div className={styles.modalOverlay} onClick={closeModal}>
-          <div
-            className={styles.modalContent}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button className={styles.closeBtn} onClick={closeModal}>
-              ×
-            </button>
-            <h2>{selectedSite.title}</h2>
-            <p>{selectedSite.description}</p>
-            <p>
-              Status: <strong>{selectedSite.status}</strong>
-            </p>
-
-            <SiteMetrics styles={styles} />
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {selectedSite && (
+          <SiteMetrics
+            key="site-metrics"
+            site={selectedSite}
+            onClose={closeModal}
+          />
+        )}
+      </AnimatePresence>
 
       <div className={styles.header}>
         <h1>Optimized Sites</h1>

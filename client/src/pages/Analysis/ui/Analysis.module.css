@@ -198,82 +198,119 @@
   color: white;
 }
 .metricsWrapper {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
+  padding: 2rem;
+  border-radius: 1rem;
 }
 
 .metricsCard {
   background: white;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  width: 90%;
-  overflow-y: auto;
-  max-height: 90vh;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
 }
 
 .title {
-  text-align: center;
-  font-size: 1.6rem;
+  font-size: 1.75rem;
+  font-weight: 600;
   margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .metricsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
 }
 
-section h3 {
-  font-size: 1rem;
-  margin-bottom: 0.6rem;
-  color: #333;
+.section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
 }
 
 .metric {
-  margin-bottom: 0.5rem;
   display: flex;
-  flex-direction: column;
-  font-size: 0.9rem;
-}
-
-.metric span {
-  font-weight: 500;
-  color: #666;
-}
-
-.metric strong {
-  font-weight: bold;
-  color: #111;
-}
-
-.barContainer {
-  background: #eee;
-  height: 6px;
-  border-radius: 4px;
-  overflow: hidden;
-  margin: 5px 0;
-  position: relative;
-}
-
-.bar {
-  background: #4c8ef7;
-  height: 100%;
-  transition: width 0.3s ease;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
 }
 
 .badge {
-  display: inline-block;
-  background: #22c55e;
-  color: white;
-  font-weight: bold;
-  padding: 4px 10px;
+  background: #e6f4ea;
+  color: #2e7d32;
+  padding: 0.25rem 0.5rem;
   border-radius: 999px;
-  font-size: 0.85rem;
-  margin-top: 4px;
+  font-weight: 500;
+}
+
+.barContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.bar {
+  flex: 1;
+  height: 6px;
+  background: #3b82f6;
+  border-radius: 4px;
+}
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background: #fff;
+  padding: 2rem;
+  max-width: 1000px;
+  width: 90%;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.badgeGroup {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.badgeGreen {
+  background-color: #e6f4ea;
+  color: #16a34a;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.badgeGray {
+  background-color: #f0f2f4;
+  color: #111827;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 0.875rem;
 }
