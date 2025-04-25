@@ -71,16 +71,10 @@ const SiteMetrics = ({ onClose }) => {
         <div className={styles.metricsWrapper}>
           <div className={styles.metricsCard}>
             <div className={styles.title}>Website Metrics</div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr auto 1fr",
-                alignItems: "center",
-                gap: "2rem",
-              }}
-            >
-              <div>
-                <Section title="Performance" icon="⚡">
+
+            <div className={styles.metricsLayout}>
+              <div className={styles.metricsLeft}>
+                <Section title="⚡ Performance">
                   <Metric
                     label="Load time"
                     value={`${(mockMetrics.load_time_ms / 1000).toFixed(1)} s`}
@@ -106,98 +100,81 @@ const SiteMetrics = ({ onClose }) => {
                     value={mockMetrics.cumulative_layout_shift.toFixed(2)}
                   />
                 </Section>
-                <Section title="Link Structure" icon="🔗">
+
+                <Section title="🏗️ Structure & Content">
                   <Metric
                     label="Internal links"
                     value={mockMetrics.internal_links}
-                    bar
+                  />
+                  <Metric
+                    label="External links"
+                    value={mockMetrics.external_links}
                   />
                   <Metric
                     label="Title length"
                     value={mockMetrics.title_length}
-                    bar
                   />
-                </Section>
-                <Section title="Structure" icon="🏗️">
+                  <Metric label="H1 count" value={mockMetrics.h1_count} />
                   <Metric
                     label="Images with alt"
                     value={mockMetrics.images_with_alt}
                   />
-                  <Metric label="H1 count" value={mockMetrics.h1_count} />
                   <Metric
-                    label="Canonical link"
-                    value={mockMetrics.canonical_link ? "✓" : "✗"}
+                    label="Images without alt"
+                    value={mockMetrics.images_without_alt}
+                  />
+                </Section>
+
+                <Section title="📈 Quality Scores">
+                  <Metric
+                    label="SEO Score"
+                    value={`${mockMetrics.seo_score}%`}
                   />
                   <Metric
-                    label="robots.txt"
-                    value={mockMetrics.robots_txt_present ? "✓" : "✗"}
+                    label="Accessibility score"
+                    value={`${mockMetrics.accessibility_score}%`}
                   />
-                  <Metric
-                    label="HTTPS"
-                    value={mockMetrics.uses_https ? "✓" : "✗"}
-                  />
+                  <Metric label="HTTP status" value={mockMetrics.http_status} />
                 </Section>
               </div>
 
-              <div style={{ position: "relative", width: 200, height: 200 }}>
-                <RadialBarChart
-                  width={200}
-                  height={200}
-                  cx={100}
-                  cy={100}
-                  innerRadius={70}
-                  outerRadius={90}
-                  barSize={15}
-                  data={optimizationData}
-                  startAngle={90}
-                  endAngle={-270}
-                >
-                  <PolarAngleAxis
-                    type="number"
-                    domain={[0, 100]}
-                    angleAxisId={0}
-                    tick={false}
-                  />
-                  <RadialBar
-                    minAngle={15}
-                    background
-                    clockWise
-                    dataKey="uv"
-                    cornerRadius={10}
-                  />
-                </RadialBarChart>
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    textAlign: "center",
-                    pointerEvents: "none",
-                  }}
-                >
-                  <div style={{ fontSize: "1.75rem", fontWeight: "bold" }}>
-                    {mockMetrics.optimization_score}%
-                  </div>
-                  <div style={{ fontSize: "1rem", color: "#666" }}>
-                    Optimization
+              <div className={styles.metricsRight}>
+                <div className={styles.chartWrapper}>
+                  <RadialBarChart
+                    width={300}
+                    height={300}
+                    cx={150}
+                    cy={150}
+                    innerRadius={140}
+                    outerRadius={140}
+                    barSize={20}
+                    data={optimizationData}
+                    startAngle={90}
+                    endAngle={-270}
+                  >
+                    <PolarAngleAxis
+                      type="number"
+                      domain={[0, 100]}
+                      angleAxisId={0}
+                      tick={false}
+                    />
+                    <RadialBar
+                      minAngle={15}
+                      background
+                      clockWise
+                      dataKey="uv"
+                      cornerRadius={10}
+                    />
+                  </RadialBarChart>
+                  <div className={styles.chartLabel}>
+                    <div className={styles.chartValue}>
+                      {mockMetrics.optimization_score}%
+                    </div>
+                    <div className={styles.chartLabelText}>Optimization</div>
                   </div>
                 </div>
 
-                {/* 👇 Добавленные бейджи */}
                 <div className={styles.badgeGroup}>
-                  <Badge
-                    label="SEO score"
-                    success={mockMetrics.seo_score >= 70}
-                  />
-                  <Badge
-                    label="HTTP status"
-                    success={mockMetrics.http_status === 200}
-                  />
-                  <Badge
-                    label="Accessibility"
-                    success={mockMetrics.accessibility_score >= 80}
-                  />
                   <Badge label="HTTPS" success={mockMetrics.uses_https} />
                   <Badge
                     label="robots.txt"
@@ -208,7 +185,7 @@ const SiteMetrics = ({ onClose }) => {
                     success={mockMetrics.sitemap_present}
                   />
                   <Badge
-                    label="Canonical"
+                    label="Canonical link"
                     success={mockMetrics.canonical_link}
                   />
                   <Badge
@@ -220,62 +197,14 @@ const SiteMetrics = ({ onClose }) => {
                     success={mockMetrics.mobile_friendly}
                   />
                   <Badge
+                    label="Viewport Tag"
+                    success={mockMetrics.viewport_tag_present}
+                  />
+                  <Badge
                     label="Security Headers"
                     success={mockMetrics.security_headers_present}
                   />
                 </div>
-              </div>
-
-              <div>
-                <Section title="Images" icon="🖼️">
-                  <Metric
-                    label="Images without alt"
-                    value={mockMetrics.images_without_alt}
-                  />
-                  <Metric
-                    label="External links"
-                    value={mockMetrics.external_links}
-                  />
-                </Section>
-                <Section title="SEO" icon="🔍">
-                  <Metric
-                    label="Meta description"
-                    value={mockMetrics.meta_description_present ? "✓" : "✗"}
-                  />
-                  <Metric
-                    label="Sitemap present"
-                    value={mockMetrics.sitemap_present ? "✓" : "✗"}
-                  />
-                  <Metric
-                    label="SEO Score"
-                    value={`${mockMetrics.seo_score}%`}
-                  />
-                </Section>
-                <Section title="Security" icon="🛡️">
-                  <Metric
-                    label="Security headers"
-                    value={
-                      mockMetrics.security_headers_present ? "✓" : "Missing"
-                    }
-                  />
-                </Section>
-                <Section title="Accessibility & UX" icon="🧩">
-                  <Metric
-                    label="Viewport tag"
-                    value={mockMetrics.viewport_tag_present ? "✓" : "✗"}
-                  />
-                  <Metric
-                    label="Mobile friendly"
-                    value={mockMetrics.mobile_friendly ? "✓" : "✗"}
-                  />
-                  <Metric
-                    label="Accessibility score"
-                    value={`${mockMetrics.accessibility_score}%`}
-                  />
-                </Section>
-                <Section title="Technical" icon="🖥️">
-                  <Metric label="HTTP status" value={mockMetrics.http_status} />
-                </Section>
               </div>
             </div>
           </div>
