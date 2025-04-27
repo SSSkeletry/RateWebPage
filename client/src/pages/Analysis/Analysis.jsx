@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCurrentUser } from "../../entities/user/model";
+import { fetchCurrentUser } from "entities/User/model";
 import styles from "./ui/Analysis.module.css";
 import ProfileSection from "./sections/ProfileSection";
 import SitesSection from "./sections/SitesSection";

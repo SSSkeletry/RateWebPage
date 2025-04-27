@@ -1,7 +1,7 @@
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import styles from "../ui/Home.module.css";
-import { assets } from "../../../shared/assets/index";
+import { assets } from "shared/assets/index";
 import { useEffect, useRef, useState, useMemo } from "react";
 
 const testimonials = [

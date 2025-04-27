@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import styles from "../ui/Home.module.css";
-import { assets } from "../../../shared/assets/index";
+import { assets } from "shared/assets/index";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: -50 },

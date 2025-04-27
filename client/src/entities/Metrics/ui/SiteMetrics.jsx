@@ -215,33 +215,41 @@ const SiteMetrics = ({ onClose }) => {
         max={max}
         values={[displayedValue]}
         onChange={() => {}}
-        renderTrack={({ props, children }) => (
-          <div
-            {...props}
-            style={{
-              ...props.style,
-              height: "6px",
-              width: "100%",
-              background: "linear-gradient(to right, red, orange, green)",
-              borderRadius: "3px",
-            }}
-          >
-            {children}
-          </div>
-        )}
-        renderThumb={({ props }) => (
-          <div
-            {...props}
-            style={{
-              ...props.style,
-              height: "16px",
-              width: "16px",
-              backgroundColor: "#999",
-              borderRadius: "50%",
-              border: "2px solid white",
-            }}
-          />
-        )}
+        renderTrack={({ props, children }) => {
+          const { key, ...restProps } = props;
+          return (
+            <div
+              {...restProps}
+              key={key}
+              style={{
+                ...restProps.style,
+                height: "6px",
+                width: "100%",
+                background: "linear-gradient(to right, red, orange, green)",
+                borderRadius: "3px",
+              }}
+            >
+              {children}
+            </div>
+          );
+        }}
+        renderThumb={({ props }) => {
+          const { key, ...restProps } = props;
+          return (
+            <div
+              {...restProps}
+              key={key}
+              style={{
+                ...restProps.style,
+                height: "16px",
+                width: "16px",
+                backgroundColor: "#999",
+                borderRadius: "50%",
+                border: "2px solid white",
+              }}
+            />
+          );
+        }}
       />
     );
   };

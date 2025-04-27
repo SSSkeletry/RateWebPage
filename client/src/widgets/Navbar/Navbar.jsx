@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../features/auth/model";
+import { logout } from "features/Auth/model";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 

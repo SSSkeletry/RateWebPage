@@ -1,5 +1,5 @@
 import styles from "../ui/Home.module.css";
-import { assets } from "../../../shared/assets/index";
+import { assets } from "shared/assets/index";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const PromoSection = () => {
