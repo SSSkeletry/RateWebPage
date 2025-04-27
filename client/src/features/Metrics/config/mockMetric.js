@@ -1,0 +1,28 @@
+const mockMetrics = {
+  load_time_ms: 1000,
+  page_size_kb: 120,
+  first_contentful_paint_ms: 1800,
+  largest_contentful_paint_ms: 2100,
+  total_blocking_time_ms: 200,
+  cumulative_layout_shift: 0.05,
+  internal_links: 105,
+  external_links: 36,
+  images_with_alt: 100,
+  images_without_alt: 4,
+  h1_count: 1,
+  meta_description_present: true,
+  title_length: 60,
+  canonical_link: true,
+  sitemap_present: true,
+  robots_txt_present: true,
+  uses_https: true,
+  security_headers_present: false,
+  viewport_tag_present: true,
+  mobile_friendly: true,
+  accessibility_score: 92,
+  http_status: 200,
+  seo_score: 88.5,
+  optimization_score: 82,
+};
+
+export default mockMetrics;

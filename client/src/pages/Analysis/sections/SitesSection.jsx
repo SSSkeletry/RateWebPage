@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import SiteMetrics from "entities/Metrics/ui/SiteMetrics";
+import SiteMetrics from "features/Metrics/ui/SiteMetrics";
 
 const SitesSection = ({ websites, styles }) => {
   const [selectedSite, setSelectedSite] = useState(null);
