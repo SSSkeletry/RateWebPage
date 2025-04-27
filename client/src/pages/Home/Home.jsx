@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Navbar from "../../widgets/Navbar/Navbar";
-import Auth from "../../features/auth/ui/Auth";
+import Navbar from "widgets/Navbar/Navbar";
+import Auth from "features/Auth/ui/Auth";
 import PromoSection from "./sections/PromoSection";
 import HowItWorksSection from "./sections/HowItWorksSection";
 import PricingSection from "./sections/PricingSection";

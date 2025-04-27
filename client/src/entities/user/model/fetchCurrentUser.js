@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { logout } from "../../../features/auth/model/logout";
+import { logout } from "features/Auth/model/logout";
 
 export const fetchCurrentUser = createAsyncThunk(
   "user/fetchCurrentUser",
