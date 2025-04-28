@@ -72,36 +72,53 @@ const WebsiteMetric = sequelize.define(
   {
     load_time_ms: DataTypes.INTEGER,
     page_size_kb: DataTypes.INTEGER,
+    html_size_kb: DataTypes.INTEGER,
+
     first_contentful_paint_ms: DataTypes.INTEGER,
     largest_contentful_paint_ms: DataTypes.INTEGER,
     total_blocking_time_ms: DataTypes.INTEGER,
     cumulative_layout_shift: DataTypes.DECIMAL(4, 3),
+
+    number_of_http_requests: DataTypes.INTEGER,
+    third_party_scripts_count: DataTypes.INTEGER,
+
+    css_minified: DataTypes.BOOLEAN,
+    js_minified: DataTypes.BOOLEAN,
+    static_assets_cached: DataTypes.BOOLEAN,
+    critical_css_inlined: DataTypes.BOOLEAN,
 
     internal_links: DataTypes.INTEGER,
     external_links: DataTypes.INTEGER,
 
     images_with_alt: DataTypes.INTEGER,
     images_without_alt: DataTypes.INTEGER,
+    modern_image_formats_used: DataTypes.BOOLEAN,
+    lazy_loading_used: DataTypes.BOOLEAN,
 
     h1_count: DataTypes.INTEGER,
-    meta_description_present: DataTypes.BOOLEAN,
     title_length: DataTypes.INTEGER,
+    meta_description_present: DataTypes.BOOLEAN,
     canonical_link: DataTypes.BOOLEAN,
+
     sitemap_present: DataTypes.BOOLEAN,
     robots_txt_present: DataTypes.BOOLEAN,
 
     uses_https: DataTypes.BOOLEAN,
+    http2_or_higher: DataTypes.BOOLEAN,
     security_headers_present: DataTypes.BOOLEAN,
 
     viewport_tag_present: DataTypes.BOOLEAN,
     mobile_friendly: DataTypes.BOOLEAN,
+
     accessibility_score: DataTypes.DECIMAL(5, 2),
-
-    http_status: DataTypes.INTEGER,
     seo_score: DataTypes.DECIMAL(5, 2),
-
     optimization_score: {
       type: DataTypes.DECIMAL(5, 2),
+      allowNull: true,
+    },
+
+    http_statuses: {
+      type: DataTypes.JSONB,
       allowNull: true,
     },
   },
