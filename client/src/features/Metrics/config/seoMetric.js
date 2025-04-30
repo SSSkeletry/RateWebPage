@@ -1,7 +1,7 @@
 const seoMetrics = {
   internal_links: 105,
   external_links: 36,
-  images_with_alt: 100,
+  images_with_alt: 80,
   images_without_alt: 4,
   h1_count: 1,
   meta_description_present: true,

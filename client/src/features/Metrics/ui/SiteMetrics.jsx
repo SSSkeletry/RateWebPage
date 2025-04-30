@@ -6,6 +6,7 @@ import mockMetrics from "features/Metrics/config/mockMetric";
 import metricLimits from "features/Metrics/config/metricLimits";
 import seoMetrics from "features/Metrics/config/seoMetric";
 import styles from "./SiteMetrics.module.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const tabs = [
   { key: "optimization", label: "Optimization" },
@@ -38,6 +39,7 @@ const renderRange = (metric) => {
       min={min}
       max={max}
       values={[adjustedValue]}
+      onChange={() => {}}
       renderTrack={({ props, children }) => (
         <div
           {...props}
@@ -179,21 +181,22 @@ const HttpStatusTable = () => {
           <thead>
             <tr>
               <th>URL</th>
-              <th>Status</th>
-              <th>Working</th>
+              <th className={styles.centerCell}>Status</th>
+              <th className={styles.centerCell}>Working</th>
             </tr>
           </thead>
           <tbody>
             {statuses.map(({ url, status, isWorking }) => (
               <tr key={url}>
                 <td>{url}</td>
-                <td>{status}</td>
-                <td>
-                  <span
-                    className={isWorking ? styles.statusOk : styles.statusError}
-                  >
-                    {isWorking ? "✅" : "❌"}
-                  </span>
+                <td className={styles.centerCell}>{status}</td>
+                <td className={styles.centerCell}>
+                  <i
+                    className={`bi ${
+                      isWorking ? "bi-check-circle-fill" : "bi-x-circle-fill"
+                    } ${isWorking ? styles.statusOk : styles.statusError}`}
+                    style={{ fontSize: "1.2rem" }}
+                  />
                 </td>
               </tr>
             ))}
