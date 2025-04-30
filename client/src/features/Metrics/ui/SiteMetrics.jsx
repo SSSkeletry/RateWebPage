@@ -163,6 +163,46 @@ const renderMetricsGroup = (title, keys) => (
       ))}
   </Section>
 );
+const HttpStatusTable = () => {
+  const statuses = Object.entries(seoMetrics.http_statuses).map(
+    ([url, { status, isWorking }]) => ({
+      url,
+      status,
+      isWorking,
+    })
+  );
+
+  return (
+    <Section title="🌐 HTTP Statuses">
+      <div className={styles.tableWrapper}>
+        <table className={styles.httpTable}>
+          <thead>
+            <tr>
+              <th>URL</th>
+              <th>Status</th>
+              <th>Working</th>
+            </tr>
+          </thead>
+          <tbody>
+            {statuses.map(({ url, status, isWorking }) => (
+              <tr key={url}>
+                <td>{url}</td>
+                <td>{status}</td>
+                <td>
+                  <span
+                    className={isWorking ? styles.statusOk : styles.statusError}
+                  >
+                    {isWorking ? "✅" : "❌"}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Section>
+  );
+};
 
 const SiteMetrics = ({ onClose }) => {
   const [activeTab, setActiveTab] = useState("optimization");
@@ -253,6 +293,7 @@ const SiteMetrics = ({ onClose }) => {
               <MetricRow key={metric.key} metric={metric} />
             ))}
         </Section>
+        <HttpStatusTable />
       </div>
       <div className={styles.metricsRight}>
         <Chart
@@ -309,7 +350,7 @@ const SiteMetrics = ({ onClose }) => {
         <button className={styles.closeBtn} onClick={onClose}>
           ×
         </button>
-
+        <h2 className={styles.title}>Website Metrics</h2>
         <div className={styles.tabs}>
           {tabs.map((tab) => (
             <button

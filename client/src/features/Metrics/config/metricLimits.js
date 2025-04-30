@@ -152,16 +152,6 @@ const metricLimits = [
     ascending: true,
     source: "seo",
   },
-  {
-    key: "http_statuses",
-    label: "HTTP Statuses",
-    unit: "",
-    min: 0,
-    max: 600,
-    thresholds: { good: 200, medium: 302 },
-    ascending: false,
-    source: "seo",
-  },
 
   {
     key: "accessibility_score",
