@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, register } from "../model";
+import ReCAPTCHA from "react-google-recaptcha";
 import "./Auth.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
@@ -12,8 +13,14 @@ const Auth = ({ isOpen, setIsOpen }) => {
 
   const dispatch = useDispatch();
   const { status, error, token } = useSelector((state) => state.auth);
+  const [recaptchaToken, setRecaptchaToken] = useState("");
+  const [showCaptcha, setShowCaptcha] = useState(false);
+  const toggleMode = () => {
+    setIsRegister(!isRegister);
+    setShowCaptcha(false);
+    setRecaptchaToken("");
+  };
 
-  const toggleMode = () => setIsRegister(!isRegister);
   const closeModal = () => setIsOpen(false);
 
   const handleSubmit = async (e) => {
@@ -32,13 +39,39 @@ const Auth = ({ isOpen, setIsOpen }) => {
         console.error("Error during registration and login:", err);
       }
     } else {
-      dispatch(login({ email, password }));
+      if (showCaptcha && !recaptchaToken) {
+        alert("Будь ласка, пройдіть CAPTCHA перед входом.");
+        return;
+      }
+
+      try {
+        const resultAction = await dispatch(
+          login({ email, password, recaptchaToken })
+        );
+
+        const data = resultAction.payload;
+
+        if (data?.captchaRequired) {
+          setShowCaptcha(true);
+          setRecaptchaToken("");
+          return;
+        }
+
+        if (data?.block) {
+          alert("Ваш IP тимчасово заблоковано. Спробуйте пізніше.");
+          return;
+        }
+      } catch (err) {
+        console.error("Login failed", err);
+      }
     }
   };
 
   useEffect(() => {
     if (token) {
       setIsOpen(false);
+      setShowCaptcha(false);
+      setRecaptchaToken("");
     }
   }, [token, setIsOpen]);
 
@@ -102,8 +135,18 @@ const Auth = ({ isOpen, setIsOpen }) => {
             >
               {isRegister ? "Зареєструватися" : "Увійти"}
             </button>
+            {showCaptcha && (
+              <ReCAPTCHA
+                sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                onChange={(token) => setRecaptchaToken(token)}
+              />
+            )}
 
-            {error && <p className="errorText">{error}</p>}
+            {error && (
+              <p className="errorText">
+                {typeof error === "string" ? error : error.message}
+              </p>
+            )}
 
             <p className="socialText">або іншим способом</p>
             <div className="socialIcons">

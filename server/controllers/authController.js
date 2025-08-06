@@ -28,13 +28,18 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
+  const ip = req.ip;
 
   try {
     const user = await User.findOne({ where: { email } });
-    if (!user) return res.status(400).json({ message: "Invalid credentials" });
+    if (!user) return res.status(400).json({ message: "Невірні дані" });
 
     const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(400).json({ message: "Invalid credentials" });
+    if (!match) return res.status(400).json({ message: "Невірні дані" });
+
+    if (req.clearLoginAttempts) {
+      req.clearLoginAttempts();
+    }
 
     const { accessToken, refreshToken } = generateTokens({
       id: user.id,
@@ -42,7 +47,8 @@ const login = async (req, res) => {
     });
 
     res.json({ token: accessToken, refreshToken });
-  } catch {
+  } catch (err) {
+    console.error("Login error:", err);
     res.status(500).json({ message: "Login failed" });
   }
 };
