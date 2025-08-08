@@ -1,4 +1,3 @@
-// features/User/fetchProfile.js
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "shared/api/axiosInstance";
 

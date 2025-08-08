@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, register } from "../model";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -14,7 +14,9 @@ const Auth = ({ isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
   const { status, error, token } = useSelector((state) => state.auth);
   const [recaptchaToken, setRecaptchaToken] = useState("");
+  const recaptchaRef = useRef(null);
   const [showCaptcha, setShowCaptcha] = useState(false);
+
   const toggleMode = () => {
     setIsRegister(!isRegister);
     setShowCaptcha(false);
@@ -54,6 +56,9 @@ const Auth = ({ isOpen, setIsOpen }) => {
         if (data?.captchaRequired) {
           setShowCaptcha(true);
           setRecaptchaToken("");
+          if (recaptchaRef.current) {
+            recaptchaRef.current.reset();
+          }
           return;
         }
 
@@ -72,6 +77,10 @@ const Auth = ({ isOpen, setIsOpen }) => {
       setIsOpen(false);
       setShowCaptcha(false);
       setRecaptchaToken("");
+
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+      }
     }
   }, [token, setIsOpen]);
 
@@ -139,6 +148,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
               <ReCAPTCHA
                 sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
                 onChange={(token) => setRecaptchaToken(token)}
+                ref={recaptchaRef}
               />
             )}
 

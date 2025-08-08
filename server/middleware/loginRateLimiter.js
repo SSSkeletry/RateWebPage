@@ -1,60 +1,64 @@
 const { verifyCaptcha } = require("../helpers/captcha");
-const { blockIp, isIpBlocked } = require("../helpers/blockedIps");
 
-const loginAttempts = {};
+const loginAttempts = new Map();
 
-module.exports.loginRateLimiter = async function (req, res, next) {
+const MAX_ATTEMPTS_BEFORE_CAPTCHA = 3;
+const MAX_ATTEMPTS_AFTER_CAPTCHA = 2;
+const ATTEMPT_WINDOW_MS = 60 * 1000;
+
+async function captchaChecker(req, res, next) {
   const ip = req.ip;
-  const recaptchaToken = req.body.recaptchaToken;
-
-  if (isIpBlocked(ip)) {
-    return res.status(429).json({
-      message: "Ваш IP заблоковано на 1 годину через надмірну кількість спроб.",
-      block: true,
-    });
-  }
-
   const now = Date.now();
-  const attempt = loginAttempts[ip];
 
-  if (!attempt || now - attempt.firstAttempt > 60 * 1000) {
-    loginAttempts[ip] = { count: 1, firstAttempt: now };
-  } else {
-    loginAttempts[ip].count += 1;
+  let record = loginAttempts.get(ip);
+
+  if (!record || now - record.firstAttempt > ATTEMPT_WINDOW_MS) {
+    record = {
+      count: 0,
+      passedCaptcha: false,
+      firstAttempt: now,
+    };
   }
 
-  const count = loginAttempts[ip].count;
+  if (record.passedCaptcha) {
+    record.count += 1;
 
-  if (count >= 3) {
-    if (!recaptchaToken) {
+    if (record.count > MAX_ATTEMPTS_AFTER_CAPTCHA) {
       return res.status(429).json({
-        message: "Пройдіть reCAPTCHA",
-        captchaRequired: true,
+        message: "Забагато спроб після CAPTCHA. Зачекайте 1 хвилину.",
+        limitReached: true,
       });
     }
+  } else {
+    record.count += 1;
 
-    const valid = await verifyCaptcha(recaptchaToken);
-    if (!valid) {
-      return res.status(403).json({ message: "Невірна reCAPTCHA" });
+    if (record.count > MAX_ATTEMPTS_BEFORE_CAPTCHA) {
+      const token = req.body.recaptchaToken;
+
+      if (!token) {
+        return res.status(429).json({
+          message: "Будь ласка, пройдіть reCAPTCHA.",
+          captchaRequired: true,
+        });
+      }
+
+      const valid = await verifyCaptcha(token);
+      if (!valid) {
+        return res.status(403).json({ message: "Невірна reCAPTCHA." });
+      }
+
+      record = {
+        count: 1,
+        passedCaptcha: true,
+        firstAttempt: now,
+      };
     }
-
-    loginAttempts[ip] = { count: 3, firstAttempt: now };
   }
 
-  if (count > 5) {
-    blockIp(ip, 60 * 60 * 1000);
-    delete loginAttempts[ip];
-    return res.status(429).json({
-      message: "Ваш IP заблоковано на 1 годину.",
-      block: true,
-    });
-  }
-
-  req.clearLoginAttempts = () => {
-    delete loginAttempts[ip];
-  };
-
+  loginAttempts.set(ip, record);
   next();
-};
+}
 
-module.exports.loginAttempts = loginAttempts;
+module.exports = {
+  captchaChecker,
+};

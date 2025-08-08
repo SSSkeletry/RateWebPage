@@ -40,40 +40,48 @@ const renderRange = (metric) => {
       max={max}
       values={[adjustedValue]}
       onChange={() => {}}
-      renderTrack={({ props, children }) => (
-        <div
-          {...props}
-          style={{
-            ...props.style,
-            height: "8px",
-            width: "100%",
-            borderRadius: "4px",
-            background:
-              "linear-gradient(to right, #ef4444, rgb(236, 240, 2), #22c55e)",
-            position: "relative",
-          }}
-        >
-          {children}
-        </div>
-      )}
-      renderThumb={({ props, isDragged }) => (
-        <div
-          {...props}
-          style={{
-            ...props.style,
-            height: "15px",
-            width: "15px",
-            borderRadius: "50%",
-            background: isDragged ? "#22c55e" : "#ffffff",
-            border: "3px solid #22c55e",
-            boxShadow: "0 2px 8px rgba(34,197,94,0.4)",
-            transition:
-              "background-color 0.2s ease, box-shadow 0.2s ease, transform 1s ease",
-            transform: isDragged ? "scale(1.1)" : "scale(1)",
-            pointerEvents: "none",
-          }}
-        />
-      )}
+      renderTrack={({ props, children }) => {
+        const { key, ...restProps } = props;
+        return (
+          <div
+            key={key}
+            {...restProps}
+            style={{
+              ...props.style,
+              height: "8px",
+              width: "100%",
+              borderRadius: "4px",
+              background:
+                "linear-gradient(to right, #ef4444, rgb(236, 240, 2), #22c55e)",
+              position: "relative",
+            }}
+          >
+            {children}
+          </div>
+        );
+      }}
+      renderThumb={({ props, isDragged }) => {
+        const { key, ...restProps } = props;
+        return (
+          <div
+            key={key}
+            {...restProps}
+            style={{
+              ...props.style,
+              height: "15px",
+              width: "15px",
+              borderRadius: "50%",
+              background: isDragged ? "#22c55e" : "#ffffff",
+              border: "3px solid #22c55e",
+              boxShadow: "0 2px 8px rgba(34,197,94,0.4)",
+              transition:
+                "background-color 0.2s ease, box-shadow 0.2s ease, transform 1s ease",
+              transform: isDragged ? "scale(1.1)" : "scale(1)",
+              pointerEvents: "none",
+            }}
+          />
+        );
+      }}
     />
   );
 };
