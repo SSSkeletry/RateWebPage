@@ -13,14 +13,31 @@ const Auth = ({ isOpen, setIsOpen }) => {
 
   const dispatch = useDispatch();
   const { status, error, token } = useSelector((state) => state.auth);
+
   const [recaptchaToken, setRecaptchaToken] = useState("");
   const recaptchaRef = useRef(null);
+
   const [showCaptcha, setShowCaptcha] = useState(false);
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const [notification, setNotification] = useState("");
+
+  const showNotification = (message, type = "info") => {
+    const icons = {
+      success: "bi-check-circle-fill",
+      error: "bi-exclamation-triangle-fill",
+      warning: "bi-exclamation-circle-fill",
+      info: "bi-info-circle-fill",
+    };
+
+    setNotification({ message, type, icon: icons[type] || icons.info });
+    setTimeout(() => setNotification(null), 3000);
+  };
 
   const toggleMode = () => {
     setIsRegister(!isRegister);
     setShowCaptcha(false);
     setRecaptchaToken("");
+    setFailedAttempts(0);
   };
 
   const closeModal = () => setIsOpen(false);
@@ -30,7 +47,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
 
     if (isRegister) {
       if (password !== repeatPassword) {
-        alert("Паролі не співпадають");
+        showNotification("Паролі не співпадають");
         return;
       }
 
@@ -39,35 +56,53 @@ const Auth = ({ isOpen, setIsOpen }) => {
         await dispatch(login({ email, password })).unwrap();
       } catch (err) {
         console.error("Error during registration and login:", err);
+        showNotification("Помилка при реєстрації або вході");
       }
     } else {
       if (showCaptcha && !recaptchaToken) {
-        alert("Будь ласка, пройдіть CAPTCHA перед входом.");
+        showNotification("Будь ласка, пройдіть CAPTCHA перед входом.");
         return;
       }
 
-      try {
-        const resultAction = await dispatch(
-          login({ email, password, recaptchaToken })
-        );
+      const resultAction = await dispatch(
+        login({ email, password, recaptchaToken })
+      );
 
-        const data = resultAction.payload;
+      let data = null;
+
+      if (login.fulfilled.match(resultAction)) {
+        setFailedAttempts(0);
+      } else if (login.rejected.match(resultAction)) {
+        data = resultAction.payload || resultAction.error;
+        setFailedAttempts((prev) => prev + 1);
 
         if (data?.captchaRequired) {
           setShowCaptcha(true);
           setRecaptchaToken("");
-          if (recaptchaRef.current) {
-            recaptchaRef.current.reset();
-          }
+          recaptchaRef.current?.reset();
+          showNotification(data.message || "Будь ласка, пройдіть CAPTCHA.");
           return;
         }
 
-        if (data?.block) {
-          alert("Ваш IP тимчасово заблоковано. Спробуйте пізніше.");
+        if (data?.limitReached) {
+          showNotification(
+            data.message || "Досягнуто ліміт спроб. Зачекайте хвилину."
+          );
           return;
         }
-      } catch (err) {
-        console.error("Login failed", err);
+
+        if (failedAttempts + 1 >= 5 && !showCaptcha) {
+          setShowCaptcha(true);
+          showNotification("Досягнуто ліміт спроб. Пройдіть CAPTCHA.");
+          return;
+        }
+
+        if (data?.wrongCredentials) {
+          showNotification(data.message || "Невірний логін або пароль");
+          return;
+        }
+
+        showNotification(data.message || "Помилка входу");
       }
     }
   };
@@ -77,10 +112,8 @@ const Auth = ({ isOpen, setIsOpen }) => {
       setIsOpen(false);
       setShowCaptcha(false);
       setRecaptchaToken("");
-
-      if (recaptchaRef.current) {
-        recaptchaRef.current.reset();
-      }
+      setFailedAttempts(0);
+      recaptchaRef.current?.reset();
     }
   }, [token, setIsOpen]);
 
@@ -93,6 +126,13 @@ const Auth = ({ isOpen, setIsOpen }) => {
         className={`container ${isRegister ? "sign-in" : ""}`}
         onClick={(e) => e.stopPropagation()}
       >
+        {notification && (
+          <div className={`notification ${notification.type}`}>
+            <i className={`bi ${notification.icon}`}></i>
+            <span>{notification.message}</span>
+          </div>
+        )}
+
         <div className="leftPanel">
           <div className="content">
             <h2>{isRegister ? "Раді вас бачити!" : "Ласкаво просимо!"}</h2>
@@ -137,13 +177,6 @@ const Auth = ({ isOpen, setIsOpen }) => {
               />
             )}
 
-            <button
-              type="submit"
-              className="submitBtn"
-              disabled={status === "loading"}
-            >
-              {isRegister ? "Зареєструватися" : "Увійти"}
-            </button>
             {showCaptcha && (
               <ReCAPTCHA
                 sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
@@ -151,6 +184,14 @@ const Auth = ({ isOpen, setIsOpen }) => {
                 ref={recaptchaRef}
               />
             )}
+
+            <button
+              type="submit"
+              className="submitBtn"
+              disabled={status === "loading"}
+            >
+              {isRegister ? "Зареєструватися" : "Увійти"}
+            </button>
 
             {error && (
               <p className="errorText">

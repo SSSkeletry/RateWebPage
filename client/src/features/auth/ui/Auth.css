@@ -143,3 +143,55 @@ input {
 .container.sign-in .formPanel {
   transform: translateX(-100%);
 }
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 30%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: slideDown 0.3s forwards, fadeOut 0.5s 2.5s forwards;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.notification i {
+  font-size: 18px;
+}
+
+.notification.success {
+  background: linear-gradient(135deg, #28a745, #218838);
+}
+
+.notification.error {
+  background: linear-gradient(135deg, #dc3545, #b02a37);
+}
+
+.notification.warning {
+  background: linear-gradient(135deg, #ffc107, #d39e00);
+}
+
+.notification.info {
+  background: linear-gradient(135deg, #17a2b8, #117a8b);
+}
+
+@keyframes slideDown {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}

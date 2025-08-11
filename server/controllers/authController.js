@@ -5,7 +5,7 @@ const { verifyCaptcha } = require("../helpers/captcha");
 
 const loginAttempts = new Map();
 
-const MAX_ATTEMPTS_BEFORE_CAPTCHA = 3;
+const MAX_ATTEMPTS_BEFORE_CAPTCHA = 5;
 const MAX_ATTEMPTS_AFTER_CAPTCHA = 2;
 const ATTEMPT_WINDOW_MS = 60 * 1000;
 
@@ -48,10 +48,12 @@ const login = async (req, res) => {
       const valid = await verifyCaptcha(recaptchaToken);
       if (!valid) {
         loginAttempts.set(ip, record);
-        return res.status(403).json({ message: "Невірна reCAPTCHA." });
+        return res.status(403).json({
+          message: "Невірна reCAPTCHA.",
+          captchaRequired: true,
+        });
       }
 
-      // ✅ Сброс счётчика при успешной CAPTCHA
       record = {
         count: 0,
         passedCaptcha: true,
@@ -64,16 +66,22 @@ const login = async (req, res) => {
     const user = await User.findOne({ where: { email } });
     if (!user) {
       loginAttempts.set(ip, record);
-      return res.status(400).json({ message: "Невірні дані" });
+      return res.status(400).json({
+        message: "Невірні логін або пароль",
+        wrongCredentials: true,
+      });
     }
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       loginAttempts.set(ip, record);
-      return res.status(400).json({ message: "Невірні дані" });
+      return res.status(400).json({
+        message: "Невірні логін або пароль",
+        wrongCredentials: true,
+      });
     }
 
-    loginAttempts.delete(ip); // Успешный логин — удаляем запись
+    loginAttempts.delete(ip);
 
     const { accessToken, refreshToken } = generateTokens({
       id: user.id,
