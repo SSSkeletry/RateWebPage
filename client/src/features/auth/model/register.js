@@ -11,7 +11,9 @@ export const register = createAsyncThunk(
       });
       return response.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err.response.data.message);
+      return thunkAPI.rejectWithValue(
+        err.response?.data || { message: "Unknown error" }
+      );
     }
   }
 );
