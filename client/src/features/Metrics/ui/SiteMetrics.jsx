@@ -2,11 +2,9 @@ import { useEffect, useState, useCallback } from "react";
 import { Range } from "react-range";
 import { motion } from "framer-motion";
 import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts";
-import mockMetrics from "features/Metrics/config/mockMetric";
-import metricLimits from "features/Metrics/config/metricLimits";
-import seoMetrics from "features/Metrics/config/seoMetric";
 import styles from "./SiteMetrics.module.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import metricLimits from "../config/metricLimits";
 
 const tabs = [
   { key: "optimization", label: "Optimization" },
@@ -14,19 +12,21 @@ const tabs = [
   { key: "history", label: "History" },
 ];
 
-const getMetricValue = (metric) => {
-  if (metric.source === "seo") return seoMetrics[metric.key];
+const getMetricValue = (metric, site, useLatest = true) => {
+  const data = useLatest ? site.latestMetric : site.WebsiteMetrics?.[0];
+
+  if (!data) return 0;
+
+  if (metric.source === "seo") return data.seoMetrics?.[metric.key] || 0;
   if (metric.key === "alt_text_coverage") {
-    const total = mockMetrics.images_with_alt + mockMetrics.images_without_alt;
-    return total === 0
-      ? 0
-      : Math.round((mockMetrics.images_with_alt / total) * 100);
+    const total = data.images_with_alt + data.images_without_alt;
+    return total === 0 ? 0 : Math.round((data.images_with_alt / total) * 100);
   }
-  return mockMetrics[metric.key];
+  return data[metric.key] || 0;
 };
 
-const renderRange = (metric) => {
-  const value = getMetricValue(metric);
+const renderRange = (metric, site, useLatest = true) => {
+  const value = getMetricValue(metric, site, useLatest);
   const { min, max, ascending } = metric;
   const isDecimal = Number(value) % 1 !== 0 || max - min <= 10;
   const step = isDecimal ? 0.01 : 1;
@@ -86,16 +86,16 @@ const renderRange = (metric) => {
   );
 };
 
-const MetricRow = ({ metric }) => (
+const MetricRow = ({ metric, site, useLatest }) => (
   <div className={styles.metricRow}>
     <div className={styles.metricHeader}>
       <span className={styles.metricLabel}>{metric.label}</span>
       <span className={styles.metricValue}>
-        {getMetricValue(metric)}
+        {getMetricValue(metric, site, useLatest)}
         {metric.unit}
       </span>
     </div>
-    {renderRange(metric)}
+    {renderRange(metric, site, useLatest)}
   </div>
 );
 
@@ -164,23 +164,14 @@ const Chart = ({ data, value, label }) => (
   </div>
 );
 
-const renderMetricsGroup = (title, keys) => (
-  <Section title={title}>
-    {metricLimits
-      .filter((metric) => keys.includes(metric.key))
-      .map((metric) => (
-        <MetricRow key={metric.key} metric={metric} />
-      ))}
-  </Section>
-);
-const HttpStatusTable = () => {
-  const statuses = Object.entries(seoMetrics.http_statuses).map(
-    ([url, { status, isWorking }]) => ({
-      url,
-      status,
-      isWorking,
-    })
-  );
+const HttpStatusTable = ({ site }) => {
+  const statuses = Object.entries(
+    site.latestMetric?.seoMetrics?.http_statuses || {}
+  ).map(([url, { status, isWorking }]) => ({
+    url,
+    status,
+    isWorking,
+  }));
 
   return (
     <Section title="🌐 HTTP Statuses">
@@ -215,7 +206,23 @@ const HttpStatusTable = () => {
   );
 };
 
-const SiteMetrics = ({ onClose }) => {
+const renderMetricsGroup = (title, keys, site, useLatest = true) => (
+  <Section title={title}>
+    {metricLimits
+      .filter((metric) => keys.includes(metric.key))
+      .map((metric) => (
+        <MetricRow
+          key={metric.key}
+          metric={metric}
+          site={site}
+          useLatest={useLatest}
+        />
+      ))}
+  </Section>
+);
+
+const SiteMetrics = ({ site, onClose }) => {
+  console.log("📊 SiteMetrics props.site:", site);
   const [activeTab, setActiveTab] = useState("optimization");
 
   const handleEscape = useCallback(
@@ -233,59 +240,70 @@ const SiteMetrics = ({ onClose }) => {
   const renderOptimizationTab = () => (
     <div className={styles.metricsLayout}>
       <div className={styles.metricsLeft}>
-        {renderMetricsGroup("⚡ Performance", [
-          "load_time_ms",
-          "first_contentful_paint_ms",
-          "largest_contentful_paint_ms",
-          "total_blocking_time_ms",
-          "cumulative_layout_shift",
-        ])}
-        {renderMetricsGroup("📦 Resources", [
-          "html_size_kb",
-          "number_of_http_requests",
-        ])}
-        {renderMetricsGroup("📜 Scripts", ["third_party_scripts_count"])}
+        {renderMetricsGroup(
+          "⚡ Performance",
+          [
+            "load_time_ms",
+            "first_contentful_paint_ms",
+            "largest_contentful_paint_ms",
+            "total_blocking_time_ms",
+            "cumulative_layout_shift",
+          ],
+          site
+        )}
+        {renderMetricsGroup(
+          "📦 Resources",
+          ["html_size_kb", "number_of_http_requests"],
+          site
+        )}
+        {renderMetricsGroup("📜 Scripts", ["third_party_scripts_count"], site)}
       </div>
       <div className={styles.metricsRight}>
         <Chart
           data={[
             {
               name: "Optimization",
-              uv: mockMetrics.optimization_score,
+              uv: site.latestMetric?.optimization_score || 0,
               fill: "#22c55e",
             },
           ]}
-          value={mockMetrics.optimization_score}
+          value={site.latestMetric?.optimization_score || 0}
           label="Optimization"
         />
         <BadgeGroup
           badges={[
-            { label: "HTTPS", success: mockMetrics.uses_https },
-            { label: "Mobile Friendly", success: mockMetrics.mobile_friendly },
+            { label: "HTTPS", success: site.latestMetric?.uses_https },
+            {
+              label: "Mobile Friendly",
+              success: site.latestMetric?.mobile_friendly,
+            },
             {
               label: "Viewport Tag",
-              success: mockMetrics.viewport_tag_present,
+              success: site.latestMetric?.viewport_tag_present,
             },
             {
               label: "Security Headers",
-              success: mockMetrics.security_headers_present,
+              success: site.latestMetric?.security_headers_present,
             },
-            { label: "CSS Minified", success: mockMetrics.css_minified },
-            { label: "JS Minified", success: mockMetrics.js_minified },
+            { label: "CSS Minified", success: site.latestMetric?.css_minified },
+            { label: "JS Minified", success: site.latestMetric?.js_minified },
             {
               label: "Assets Cached",
-              success: mockMetrics.static_assets_cached,
+              success: site.latestMetric?.static_assets_cached,
             },
             {
               label: "Critical CSS",
-              success: mockMetrics.critical_css_inlined,
+              success: site.latestMetric?.critical_css_inlined,
             },
             {
               label: "Modern Images",
-              success: mockMetrics.modern_image_formats_used,
+              success: site.latestMetric?.modern_image_formats_used,
             },
-            { label: "Lazy Loading", success: mockMetrics.lazy_loading_used },
-            { label: "HTTP/2+", success: mockMetrics.http2_or_higher },
+            {
+              label: "Lazy Loading",
+              success: site.latestMetric?.lazy_loading_used,
+            },
+            { label: "HTTP/2+", success: site.latestMetric?.http2_or_higher },
           ]}
         />
       </div>
@@ -301,27 +319,50 @@ const SiteMetrics = ({ onClose }) => {
               (metric) => metric.source === "seo" && metric.key !== "seo_score"
             )
             .map((metric) => (
-              <MetricRow key={metric.key} metric={metric} />
+              <MetricRow
+                key={metric.key}
+                metric={metric}
+                site={site}
+                useLatest={false}
+              />
             ))}
         </Section>
-        <HttpStatusTable />
+        <HttpStatusTable site={site} />
       </div>
       <div className={styles.metricsRight}>
         <Chart
-          data={[{ name: "SEO", uv: seoMetrics.seo_score, fill: "#3b82f6" }]}
-          value={seoMetrics.seo_score}
+          data={[
+            {
+              name: "SEO",
+              uv: site.latestMetric?.seoMetrics?.seo_score || 0,
+              fill: "#3b82f6",
+            },
+          ]}
+          value={site.latestMetric?.seoMetrics?.seo_score || 0}
           label="SEO Score"
         />
         <BadgeGroup
           badges={[
             {
               label: "Meta Description",
-              success: seoMetrics.meta_description_present,
+              success: site.latestMetric?.seoMetrics?.meta_description_present,
             },
-            { label: "H1 Count", count: seoMetrics.h1_count },
-            { label: "Canonical Link", success: seoMetrics.canonical_link },
-            { label: "Sitemap", success: seoMetrics.sitemap_present },
-            { label: "Robots.txt", success: seoMetrics.robots_txt_present },
+            {
+              label: "H1 Count",
+              count: site.latestMetric?.seoMetrics?.h1_count,
+            },
+            {
+              label: "Canonical Link",
+              success: site.latestMetric?.seoMetrics?.canonical_link,
+            },
+            {
+              label: "Sitemap",
+              success: site.latestMetric?.seoMetrics?.sitemap_present,
+            },
+            {
+              label: "Robots.txt",
+              success: site.latestMetric?.seoMetrics?.robots_txt_present,
+            },
           ]}
         />
       </div>
@@ -331,7 +372,15 @@ const SiteMetrics = ({ onClose }) => {
   const renderHistoryTab = () => (
     <div className={styles.tabContent}>
       <h2>History</h2>
-      <p>История изменений или сканов сайта будет отображаться здесь.</p>
+      {site.WebsiteMetrics?.length > 0 ? (
+        site.WebsiteMetrics.map((m, idx) => (
+          <div key={idx}>
+            <strong>{new Date(m.createdAt).toLocaleDateString()}</strong>
+          </div>
+        ))
+      ) : (
+        <p>История отсутствует</p>
+      )}
     </div>
   );
 
@@ -361,7 +410,7 @@ const SiteMetrics = ({ onClose }) => {
         <button className={styles.closeBtn} onClick={onClose}>
           ×
         </button>
-        <h2 className={styles.title}>Website Metrics</h2>
+        <h2 className={styles.title}>{site.name}</h2>
         <div className={styles.tabs}>
           {tabs.map((tab) => (
             <button
@@ -375,8 +424,7 @@ const SiteMetrics = ({ onClose }) => {
             </button>
           ))}
         </div>
-
-        <div className={styles.metricsWrapper}>{tabContent[activeTab]?.()}</div>
+        <div className={styles.metricsWrapper}>{tabContent[activeTab]()}</div>
       </motion.div>
     </motion.div>
   );

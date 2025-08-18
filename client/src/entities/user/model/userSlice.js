@@ -5,7 +5,6 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     user: null,
-    websites: [],
     status: "idle",
     error: null,
   },
@@ -18,7 +17,6 @@ const userSlice = createSlice({
       .addCase(fetchCurrentUser.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.user = action.payload.user;
-        state.websites = action.payload.websites || [];
         state.error = null;
       })
       .addCase(fetchCurrentUser.rejected, (state, action) => {
