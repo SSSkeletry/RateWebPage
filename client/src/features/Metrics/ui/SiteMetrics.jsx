@@ -16,7 +16,6 @@ const getMetricValue = (metric, site, useLatest = true) => {
   const data = useLatest ? site.latestMetric : site.WebsiteMetrics?.[0];
   if (!data) return 0;
 
-  // SEO метрики теперь тоже храним плоско
   if (metric.source === "seo") {
     return (data[metric.key] ?? data.seoMetrics?.[metric.key]) || 0;
   }
