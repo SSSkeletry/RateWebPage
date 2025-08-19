@@ -1,4 +1,4 @@
-const { Website } = require("../models/models");
+const { Website, WebsiteMetric } = require("../models/models");
 
 const addWebsite = async (req, res) => {
   const { name, url } = req.body;
@@ -18,6 +18,36 @@ const addWebsite = async (req, res) => {
   }
 };
 
+async function getUserWebsitesWithMetrics(req, res) {
+  try {
+    const websites = await Website.findAll({
+      where: { UserId: req.user.id },
+      include: [
+        {
+          model: WebsiteMetric,
+          required: false,
+        },
+      ],
+      order: [[WebsiteMetric, "createdAt", "DESC"]],
+    });
+    console.log("📊 Websites with metrics:", JSON.stringify(websites, null, 2));
+    const result = websites.map((site) => {
+      const siteJSON = site.toJSON();
+
+      return {
+        ...siteJSON,
+        latestMetric: siteJSON.WebsiteMetrics?.[0] || null,
+      };
+    });
+
+    res.json(result);
+  } catch (err) {
+    console.error("Ошибка при получении сайтов и метрик:", err);
+    res.status(500).json({ error: "Ошибка при получении данных" });
+  }
+}
+
 module.exports = {
   addWebsite,
+  getUserWebsitesWithMetrics,
 };

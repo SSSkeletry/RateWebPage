@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCurrentUser } from "entities/User/model";
+import {
+  fetchWebsites,
+  selectWebsites,
+  selectWebsitesStatus,
+  selectWebsitesError,
+} from "entities/Website/model";
 import styles from "./ui/Analysis.module.css";
 import ProfileSection from "./sections/ProfileSection";
 import SitesSection from "./sections/SitesSection";
@@ -10,14 +16,25 @@ const Analysis = () => {
   const [activeTab, setActiveTab] = useState("profile");
   const dispatch = useDispatch();
 
-  const { user, websites, status, error } = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
+  const userStatus = useSelector((state) => state.user.status);
+  const userError = useSelector((state) => state.user.error);
+
+  const websites = useSelector(selectWebsites);
+  const websitesStatus = useSelector(selectWebsitesStatus);
+  const websitesError = useSelector(selectWebsitesError);
 
   useEffect(() => {
     dispatch(fetchCurrentUser());
+    dispatch(fetchWebsites());
   }, [dispatch]);
 
-  if (status === "loading") return <div>Loading...</div>;
-  if (status === "failed") return <div>Error loading data: {error}</div>;
+  if (userStatus === "loading" || websitesStatus === "loading")
+    return <div>Loading...</div>;
+  if (userStatus === "failed")
+    return <div>Error loading user: {userError}</div>;
+  if (websitesStatus === "failed")
+    return <div>Error loading websites: {websitesError}</div>;
 
   return (
     <div className={styles.wrapper}>

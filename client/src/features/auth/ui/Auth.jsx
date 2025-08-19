@@ -177,13 +177,13 @@ const Auth = ({ isOpen, setIsOpen }) => {
               />
             )}
 
-            {showCaptcha && (
+            <div style={{ display: showCaptcha ? "block" : "none" }}>
               <ReCAPTCHA
                 sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
                 onChange={(token) => setRecaptchaToken(token)}
                 ref={recaptchaRef}
               />
-            )}
+            </div>
 
             <button
               type="submit"
