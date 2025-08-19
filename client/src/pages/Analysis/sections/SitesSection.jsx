@@ -35,8 +35,9 @@ const SitesSection = ({ websites, styles }) => {
           websites.map((site, index) => (
             <div key={index} className={styles.card}>
               <div className={styles.imagePlaceholder}></div>
-              <h3>{site.title}</h3>
-              <p>{site.description}</p>
+              <h3>{site.name}</h3>
+              <p>{site.url}</p>
+
               <span
                 className={`${styles.status} ${
                   site.status === "not_optimized"

@@ -14,14 +14,18 @@ const tabs = [
 
 const getMetricValue = (metric, site, useLatest = true) => {
   const data = useLatest ? site.latestMetric : site.WebsiteMetrics?.[0];
-
   if (!data) return 0;
 
-  if (metric.source === "seo") return data.seoMetrics?.[metric.key] || 0;
+  // SEO метрики теперь тоже храним плоско
+  if (metric.source === "seo") {
+    return (data[metric.key] ?? data.seoMetrics?.[metric.key]) || 0;
+  }
+
   if (metric.key === "alt_text_coverage") {
     const total = data.images_with_alt + data.images_without_alt;
     return total === 0 ? 0 : Math.round((data.images_with_alt / total) * 100);
   }
+
   return data[metric.key] || 0;
 };
 
@@ -165,13 +169,13 @@ const Chart = ({ data, value, label }) => (
 );
 
 const HttpStatusTable = ({ site }) => {
-  const statuses = Object.entries(
-    site.latestMetric?.seoMetrics?.http_statuses || {}
-  ).map(([url, { status, isWorking }]) => ({
-    url,
-    status,
-    isWorking,
-  }));
+  const statuses = Object.entries(site.latestMetric?.http_statuses || {}).map(
+    ([url, { status, isWorking }]) => ({
+      url,
+      status,
+      isWorking,
+    })
+  );
 
   return (
     <Section title="🌐 HTTP Statuses">
@@ -222,7 +226,6 @@ const renderMetricsGroup = (title, keys, site, useLatest = true) => (
 );
 
 const SiteMetrics = ({ site, onClose }) => {
-  console.log("📊 SiteMetrics props.site:", site);
   const [activeTab, setActiveTab] = useState("optimization");
 
   const handleEscape = useCallback(
@@ -323,7 +326,7 @@ const SiteMetrics = ({ site, onClose }) => {
                 key={metric.key}
                 metric={metric}
                 site={site}
-                useLatest={false}
+                useLatest={true}
               />
             ))}
         </Section>
@@ -334,34 +337,28 @@ const SiteMetrics = ({ site, onClose }) => {
           data={[
             {
               name: "SEO",
-              uv: site.latestMetric?.seoMetrics?.seo_score || 0,
+              uv: site.latestMetric?.seo_score || 0,
               fill: "#3b82f6",
             },
           ]}
-          value={site.latestMetric?.seoMetrics?.seo_score || 0}
+          value={site.latestMetric?.seo_score || 0}
           label="SEO Score"
         />
         <BadgeGroup
           badges={[
             {
               label: "Meta Description",
-              success: site.latestMetric?.seoMetrics?.meta_description_present,
+              success: site.latestMetric?.meta_description_present,
             },
-            {
-              label: "H1 Count",
-              count: site.latestMetric?.seoMetrics?.h1_count,
-            },
+            { label: "H1 Count", count: site.latestMetric?.h1_count },
             {
               label: "Canonical Link",
-              success: site.latestMetric?.seoMetrics?.canonical_link,
+              success: site.latestMetric?.canonical_link,
             },
-            {
-              label: "Sitemap",
-              success: site.latestMetric?.seoMetrics?.sitemap_present,
-            },
+            { label: "Sitemap", success: site.latestMetric?.sitemap_present },
             {
               label: "Robots.txt",
-              success: site.latestMetric?.seoMetrics?.robots_txt_present,
+              success: site.latestMetric?.robots_txt_present,
             },
           ]}
         />
